@@ -6,7 +6,7 @@ ENGINE.Geometry = function () {
   this.faces = [];
 }
 
-ENGINE.Geometry.prototype = function () {
+ENGINE.Geometry.prototype = {
   
   //computes the normal to each face and saves it in face.normal
   //adapted from three.js
@@ -24,7 +24,7 @@ ENGINE.Geometry.prototype = function () {
 
       vec3.copy( face.normal, cb );
     }
-  }
+  },
 
   //computes the normal for each vertex
   computeVertexNormals: function () {

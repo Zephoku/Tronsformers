@@ -34,20 +34,19 @@ ENGINE.Renderer = function ( args ) {
     for ( var i = 0; i < renderList.length; i++ ) {
       var object = renderList[i];
       var program; //TODO: get the appropriate shader
-      var attributes = program.attributes;
 
       //vertices
       _gl.bindBuffer( _gl.ARRAY_BUFFER, object.geometry.__webglVertexBuffer );
-      _gl.enableVertexAttribArray( attributes.position );
-      _gl.vertexAttribPointer( attriutes.position, 3, _gl.float, false, 0, 0 );
+      _gl.enableVertexAttribArray( program.vPosition );
+      _gl.vertexAttribPointer( program.vPosition, 3, _gl.float, false, 0, 0 );
 
       //normals
       _gl.bindBuffer( _gl.ARRAY_BUFFER, object.geometry.__webglNormalBuffer );
-      _gl.enableVertexAttribArray( attributes.normal );
-      _gl.vertexAttribPointer( attriutes.normal, 3, _gl.float, false, 0, 0 );
+      _gl.enableVertexAttribArray( program.vNormal );
+      _gl.vertexAttribPointer( program.vNormal, 3, _gl.float, false, 0, 0 );
   
       _gl.drawArrays( _gl.TRAINGLE, 0, object.geometry.faces.length );  
-  }
+  };
 
   this.initWebGLObjects = function ( scene ) {
     while ( scene.objectsAdded.length ) {
@@ -66,13 +65,13 @@ ENGINE.Renderer = function ( args ) {
       
       scene.objectsAdded.splice( 0, 1 );
     }
-  }
+  };
 
   this.createGeometryBuffers( geometry ) {
     geometry.__webglVertexBuffer = _gl.createBuffer();
     geometry.__webglNormalBuffer = _gl.createBuffer();
     //TODO: color?
-  }
+  };
 
   this.updateGeometryBuffers( geometry ) {
     _gl.bindBuffer( _gl.ARRAY_BUFFER, geometry.__webglVertexBuffer );
@@ -80,7 +79,7 @@ ENGINE.Renderer = function ( args ) {
 
     _gl.bindBuffer( _gl.ARRAY_BUFFER, geometry.__webglNormalBuffer );
     _gl.bufferData( _gl.ARRAY_BUFFER, geometry.normals, _gl.STATIC_DRAW )
-  }
+  };
 
   //initialize the WebGL context
   this.initGL = function () {
@@ -92,5 +91,5 @@ ENGINE.Renderer = function ( args ) {
 		} catch ( error ) {
 			console.error( error );
 		}
-  }
+  };
     
