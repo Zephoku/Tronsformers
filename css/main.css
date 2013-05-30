@@ -1,0 +1,13 @@
+#overlay {
+  position: absolute;
+  top: 0px;
+  z-index: 10001;
+  display: block;
+}
+
+#debug {
+  position: absolute;
+  top: 0px;
+  z-index: 10001;
+  display: none;
+}
