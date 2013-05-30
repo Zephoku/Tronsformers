@@ -20,8 +20,8 @@ ENGINE.Camera = function ( fov, aspect, near, far ) {
 	this.near = near !== undefined ? near : 0.1;
 	this.far = far !== undefined ? far : 2000;
 
-  this.projectionMatrix = mat4.create();
-  this.viewMatrix = mat4.create();
+  this.matrixProjection = mat4.create();
+  this.matrixView = mat4.create();
 
 };
 
@@ -63,12 +63,11 @@ ENGINE.Camera.prototype = {
   },
 
   updateView: function() {
-    mat4.lookAt( this.viewMatrix, this.position,
-         this.position + this.direction, this.up);
+    mat4.lookAt( this.matrixView, this.position, this.lookAt, this.up);
   },
 
   updateProjection: function() {
-    mat4.perspective( this.projectionMatrix, this.fov, this.aspect,
+    mat4.perspective( this.matrixProjection, this.fov, this.aspect,
           this.near, this.far);
   },
 

@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <script type="text/javascript">ENGINE = {};</script>
+
+    <script type="text/javascript" src="lib/gl-matrix-min.js"></script>
+    <script type="text/javascript" src="Engine/object.js"></script>
+    <script type="text/javascript" src="Engine/face.js"></script>
+    <script type="text/javascript" src="Engine/renderer.js"></script>
+    <script type="text/javascript" src="Engine/camera.js"></script>
+    <script type="text/javascript" src="Engine/shaders.js"></script>
+    <script type="text/javascript" src="Engine/geometry.js"></script>
+    <script type="text/javascript" src="Engine/scene.js"></script>
+    <script type="text/javascript" src="Engine/light.js"></script>
+
+    <script type="text/javascript">
+      var renderer = new ENGINE.Renderer();
+      var scene = new ENGINE.Scene();
+      var camera = new ENGINE.Camera();
+      var o = new ENGINE.Object3D();
+      renderer.initGL();
+
+      var g = new ENGINE.Geometry();
+      g.vertices.push( vec3.fromValues( 1.0, 0.0, 0.0 ) );
+      g.vertices.push( vec3.fromValues( -1.0, 0.0, 0.0 ) );
+      g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
+
+      g.faces.push( new ENGINE.Face( 0, 1, 2 ) );
+
+      g.computeVertexNormals();
+
+      o.geometry = g;
+      o.color = vec4.fromValues( 1.0, 1.0, 1.0, 1.0 );
+
+      scene.addObject( o );
+
+      camera.position[2] = 10;
+      camera.update();
+
+      renderer.render( scene, camera );
+
+    </script>
+  </head>
+  <body>
+    HIIIIIIIIII =)
+    <canvas id="glCanvas" style="border: none;" width="500" height="500"></canvas>
+  </body>
+</html>
