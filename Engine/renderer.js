@@ -23,18 +23,15 @@ ENGINE.Renderer = function ( args ) {
     }
 
     _gl.clearColor(0.0, 0.0, 0.0, 1.0);
-    _gl.enable(_gl.DEPTH_TEST);
-
     _gl.viewport( 0, 0, _canvas.width, _canvas.height );
-
-    _gl.clear(_gl.COLOR_BUFFER_BIT | _gl.DEPTH_BUFFER_BIT);
-
 
     var lights = scene.lights
 
     //update matrices and objects
     this.initWebGLObjects( scene );
 
+    _gl.clear(_gl.COLOR_BUFFER_BIT | _gl.DEPTH_BUFFER_BIT);
+    
     renderObjects( scene.objects, camera, lights )
 
   };
@@ -122,6 +119,7 @@ ENGINE.Renderer = function ( args ) {
   //initialize the WebGL context
   this.initGL = function () {
     try {
+
 	    if ( ! ( _gl = _canvas.getContext( 'experimental-webgl' ) ) ) {
 			  throw 'Error creating WebGL context.';
 		  }
@@ -197,8 +195,8 @@ ENGINE.Renderer = function ( args ) {
 			console.error( "Could not initialise shader\n" + "VALIDATE_STATUS: " + _gl.getProgramParameter( program, _gl.VALIDATE_STATUS ) + ", gl error [" + _gl.getError() + "]" );
 		}
 
-    //_gl.deleteShader( glFragmentShader );
-		//_gl.deleteShader( glVertexShader );
+    _gl.deleteShader( glFragmentShader );
+		_gl.deleteShader( glVertexShader );
 
      
 
