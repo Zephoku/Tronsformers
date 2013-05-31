@@ -15,10 +15,10 @@ ENGINE.Camera = function ( fov, aspect, near, far ) {
   this.lookAt = vec3.create();
 
 	//projection attributes
-  this.fov = fov !== undefined ? fov : 50;
+  this.fov = fov !== undefined ? fov : 45;
 	this.aspect = aspect !== undefined ? aspect : 1;
 	this.near = near !== undefined ? near : 0.1;
-	this.far = far !== undefined ? far : 2000;
+	this.far = far !== undefined ? far : 100;
 
   this.matrixProjection = mat4.create();
   this.matrixView = mat4.create();
@@ -56,7 +56,17 @@ ENGINE.Camera.prototype = {
     return out;
   },
 
-  updateDerivedAttributes: function() {
+  updateAngles: function() {
+
+    var dx = this.lookAt[0] - this.position[0];
+    var dy = this.lookAt[1] - this.position[1];
+    var dz = this.lookAt[2] - this.position[2];
+
+    this.vAngle = Math.asin( dy / Math.sqrt( dx*dx + dy*dy + dz*dz ) );
+    this.hAngle = Math.atan2( dx, dz );
+  },
+
+  updateDerived: function() {
     this.direction = this.computeDirection();
     this.right = this.computeRight();
     this.up = this.computeUp();
@@ -74,9 +84,14 @@ ENGINE.Camera.prototype = {
 
   //updates everything
   update: function() {
-    this.updateDerivedAttributes();
+    this.updateDerived();
     this.updateView();
     this.updateProjection();
+  },
+
+  updateFromLookAt: function() {
+    this.updateAngles();
+    this.update();
   }
 
 }

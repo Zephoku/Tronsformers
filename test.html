@@ -30,11 +30,29 @@
       renderer.initGL();
 
       var g = new ENGINE.Geometry();
-      g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
-      g.vertices.push( vec3.fromValues( -1.0, -1.0, 0.0 ) );
-      g.vertices.push( vec3.fromValues( 1.0, -1.0, 0.0 ) );
 
-      g.faces.push( new ENGINE.Face( 0, 1, 2 ) );
+//pyramid geometry
+      var index = 0;
+      index = g.vertices.push( vec3.fromValues( 0.0, 0.0, 1.0 ) );
+      index = g.vertices.push( vec3.fromValues( -1.0, 0.0, -1.0 ) );
+      index = g.vertices.push( vec3.fromValues( 1.0, 0.0, -1.0 ) );
+      g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
+
+      index = g.vertices.push( vec3.fromValues( 0.0, 0.0, 1.0 ) );
+      index = g.vertices.push( vec3.fromValues( -1.0, 0.0, -1.0 ) );
+      index = g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
+      g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
+
+      index = g.vertices.push( vec3.fromValues( 0.0, 0.0, 1.0 ) );
+      index = g.vertices.push( vec3.fromValues( 1.0, 0.0, -1.0 ) );
+      index = g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
+      g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
+
+      index = g.vertices.push( vec3.fromValues( 1.0, 0.0, -1.0 ) );
+      index = g.vertices.push( vec3.fromValues( -1.0, 0.0, -1.0 ) );
+      index = g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
+      g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
+
 
       g.computeVertexNormals();
 
@@ -43,8 +61,10 @@
 
       scene.addObject( o );
 
-      camera.position[2] = 1;
-      camera.update();
+      camera.position[0] = 0.0;
+      camera.position[1] = 6.0;
+      camera.position[2] = 9.0;
+      camera.updateFromLookAt();
 
       
 

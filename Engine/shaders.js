@@ -11,7 +11,7 @@ ENGINE.Shaders = {
       "uniform mat4 matrixProjection;",
 
       "void main(void) {",
-          "gl_Position = matrixView * matrixModel * vec4(vPosition, 1.0);",
+          "gl_Position = matrixProjection * matrixView * matrixModel * vec4(vPosition, 1.0);",
       "}"
     ].join('\n'),
 

@@ -24,6 +24,7 @@ ENGINE.Renderer = function ( args ) {
 
     _gl.clearColor(0.0, 0.0, 0.0, 1.0);
     _gl.viewport( 0, 0, _canvas.width, _canvas.height );
+    _gl.enable(_gl.DEPTH_TEST);
 
     var lights = scene.lights
 
