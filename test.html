@@ -17,6 +17,7 @@
   <body>
     HIIIIIIIIII =)
     <canvas id="glCanvas" style="border: none;" width="500" height="500"></canvas>
+    <input type=button onclick='renderer.render( scene, camera );' value="Render"/>
   </body>
 
   <script type="text/javascript">
@@ -29,23 +30,23 @@
       renderer.initGL();
 
       var g = new ENGINE.Geometry();
-      g.vertices.push( vec3.fromValues( 1.0, 0.0, 0.0 ) );
-      g.vertices.push( vec3.fromValues( -1.0, 0.0, 0.0 ) );
       g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
+      g.vertices.push( vec3.fromValues( -1.0, -1.0, 0.0 ) );
+      g.vertices.push( vec3.fromValues( 1.0, -1.0, 0.0 ) );
 
       g.faces.push( new ENGINE.Face( 0, 1, 2 ) );
 
       g.computeVertexNormals();
 
       o.geometry = g;
-      o.color = vec4.fromValues( 1.0, 1.0, 1.0, 1.0 );
+      o.color = vec4.fromValues( 1.0, 0.0, 0.0, 1.0 );
 
       scene.addObject( o );
 
-      camera.position[2] = 10;
+      camera.position[2] = 1;
       camera.update();
 
-      renderer.render( scene, camera );
+      
 
     </script>
 </html>

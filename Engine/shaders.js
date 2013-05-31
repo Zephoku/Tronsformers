@@ -10,10 +10,8 @@ ENGINE.Shaders = {
       "uniform mat4 matrixView;",
       "uniform mat4 matrixProjection;",
 
-      "uniform vec4 color;",
-
       "void main(void) {",
-          "gl_Position = matrixProjection * matrixView * matrixModel * vec4(vPosition, 1.0);",
+          "gl_Position = matrixView * matrixModel * vec4(vPosition, 1.0);",
       "}"
     ].join('\n'),
 
@@ -23,7 +21,7 @@ ENGINE.Shaders = {
       "uniform vec4 color;",
     
       "void main(void) {",
-        "gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0);",
+        "gl_FragColor = color;",
       "}"
     ].join('\n')
   

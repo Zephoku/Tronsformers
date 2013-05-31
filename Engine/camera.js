@@ -30,9 +30,9 @@ ENGINE.Camera.prototype = {
   //returns the right unit vector
   computeRight: function() {
     var out = vec3.fromValues(
-    Math.sin( this.hAngle - Math.PI/2 ),
+      Math.sin( this.hAngle - Math.PI/2 ).toFixed(10),
       0,
-      Math.cos( this.hAngle - Math.PI/2 )
+      Math.cos( this.hAngle - Math.PI/2 ).toFixed(10)
     );
     out = vec3.normalize( out, out );
     return out;
@@ -41,9 +41,9 @@ ENGINE.Camera.prototype = {
   //returns the direction unit vector based on the angles
   computeDirection: function() {
     var out = vec3.fromValues(
-      Math.cos( this.vAngle ) * Math.sin( this.hAngle ),
-      Math.sin( this.vAngle ),
-      Math.cos( this.vAngle ) * Math.cos( this.hAngle )
+      Math.cos( this.vAngle ) * Math.sin( this.hAngle ).toFixed(10),
+      Math.sin( this.vAngle ).toFixed(10),
+      Math.cos( this.vAngle ) * Math.cos( this.hAngle ).toFixed(10)
     );
     out = vec3.normalize( out, out );
     return out;
@@ -57,9 +57,10 @@ ENGINE.Camera.prototype = {
   },
 
   updateDerivedAttributes: function() {
-    this.up = this.computeUp();
     this.direction = this.computeDirection();
-    vec3.add( this.lookAt, this.up, this.direction);
+    this.right = this.computeRight();
+    this.up = this.computeUp();
+    vec3.add( this.lookAt, this.position, this.direction);
   },
 
   updateView: function() {

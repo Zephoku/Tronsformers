@@ -57,7 +57,7 @@ ENGINE.Renderer = function ( args ) {
         _gl.enableVertexAttribArray( program.vNormal );
         _gl.vertexAttribPointer( program.vNormal, 3, _gl.FLOAT, false, 0, 0 );
       }
-      _gl.drawArrays( _gl.TRAINGLE, 0, object.geometry.vertices.length );
+      _gl.drawArrays( _gl.TRIANGLES, 0, object.geometry.vertices.length );
     }
 
 
