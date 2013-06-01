@@ -33,18 +33,18 @@ ENGINE.Renderer = function ( args ) {
 
     _gl.clear(_gl.COLOR_BUFFER_BIT | _gl.DEPTH_BUFFER_BIT);
     
-    renderObjects( scene.objects, camera, lights )
+    renderObjects( scene.objects, scene, camera, lights )
 
   };
 
-  function renderObjects ( renderList, camera, lights ) {
+  function renderObjects ( renderList, scene, camera, lights ) {
 
     
     for ( var i = 0; i < renderList.length; i++ ) {
       var object = renderList[i];
       var program; //TODO: get the appropriate shader
 
-      setProgram( object, camera );
+      setProgram( scene, object, camera );
 
       var program = _currentProgram;
       //vertices
@@ -138,7 +138,7 @@ ENGINE.Renderer = function ( args ) {
   //
   
   //generates the program, sets it, and sets uniforms
-  function setProgram ( object, camera ) {
+  function setProgram ( scene, object, camera ) {
 
     if ( !object.fragmentShader || ! object.vertexShader ) {
       object.vertexShader = ENGINE.Shaders['basic'].vertexShader;
@@ -163,6 +163,7 @@ ENGINE.Renderer = function ( args ) {
     //
 
     //TODO: make this optional. no need to reset every frame
+    //TODO: modularize this
 
     _gl.uniform4fv( _gl.getUniformLocation(program, "color"), object.color );
 
@@ -176,6 +177,18 @@ ENGINE.Renderer = function ( args ) {
         false, camera.matrixView );
     _gl.uniformMatrix4fv( _gl.getUniformLocation(program, "matrixProjection"),
         false, camera.matrixProjection );
+
+    //lighting
+    _gl.uniform1f( _gl.getUniformLocation(program, "ambientFactor"),
+        scene.ambientFactor );
+    _gl.uniform1f( _gl.getUniformLocation(program, "specularFactor"),
+        object.specularFactor );
+    _gl.uniform1i( _gl.getUniformLocation(program, "numLights"),
+        scene.lights.length );
+
+    scene.setGLLightPosition();
+    _gl.uniform3fv( _gl.getUniformLocation(program, "lightPosition"),
+        new Float32Array( scene.__webglLightPosition ) );
 
   };
 
