@@ -2,7 +2,7 @@
 var canvasDOM = document.getElementById('glCanvas');
 var renderer = new ENGINE.Renderer({'canvas': canvasDOM});
 var scene = new ENGINE.Scene();
-var camera = new ENGINE.Camera();
+var camera = new ENGINE.Camera(90, 1, 1, 1000);
 var o = new ENGINE.Object3D();
 var light = new ENGINE.Light();
 
@@ -49,6 +49,9 @@ function update() {
   camera.position[0] = cameraX;
   camera.position[1] = cameraY;
   camera.position[2] = cameraZ;
+
+  camera.lookat = o.position;
+  camera.update();
   camera.updateFromLookAt();
   renderer.render( scene, camera ); 
 }

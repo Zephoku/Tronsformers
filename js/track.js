@@ -6,9 +6,9 @@ var debugOverlay = document.getElementById('debug');
 var overlayContext = canvasOverlay.getContext('2d');
 
 // Control Variables
-var cameraX = 0.0;
-var cameraY = 3.0;
-var cameraZ = 9.0;
+var cameraX = 0;
+var cameraY = 0;
+var cameraZ = 30.0;
 
 // Custom Messages
 statusMessages = {
@@ -79,9 +79,11 @@ function drawFaceRectangle(event) {
 // Update Debug Messages on Screen
 function updateFaceDebugMessages(event) {
   var messagep = document.getElementById('headtrackerX');
-  messagep.innerHTML = cameraX;
+  messagep.innerHTML = event.x;
   var messagep = document.getElementById('headtrackerY');
   messagep.innerHTML = cameraY;
+  var messagep = document.getElementById('headtrackerZ');
+  messagep.innerHTML = cameraZ;
   var messagep = document.getElementById('headtrackerHeight');
   messagep.innerHTML = event.height;
   var messagep = document.getElementById('headtrackerWidth');
@@ -97,9 +99,9 @@ function updateFaceDebugMessages(event) {
 }
 
 function updateCameraMovement(event){
-  cameraX = (170 - event.x) *.001;
-  cameraY = (145 - event.y) *.001;
-  cameraZ = event.height/event.width * 5;
+  cameraX = Math.floor((170 - event.x) );
+  cameraY = Math.floor((180 - event.y) );
+  cameraZ = Math.floor(250/event.width *10);
 }
 
 // Face Detection
