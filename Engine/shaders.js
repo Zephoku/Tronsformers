@@ -8,12 +8,14 @@ ENGINE.Shaders = {
       "attribute vec3 vPosition;",
       "attribute vec3 vNormal;",
 
+      "attribute vec2 vTextureCoord;",
+      "varying vec2 fTextureCoord;",
+
       "uniform mat4 matrixModel;",
       "uniform mat4 matrixView;",
       "uniform mat4 matrixProjection;",
 
       "uniform vec4 color;",
-      "varying vec4 fColor;",
 
       "uniform vec3 cameraPosition;",
       "uniform vec3 lightPosition[MAX_LIGHTS];",
@@ -23,14 +25,19 @@ ENGINE.Shaders = {
       "varying vec3 fV; //vector from point to viewer",
       "varying vec3 fL[MAX_LIGHTS]; //vector from point to light",
 
+      "varying vec4 fAmbient;",
+      "varying vec4 fDiffuse;",
+      "varying vec4 fSpecular;",
+
       "uniform float ambientFactor;",
       "uniform float diffuseFactor;",     
       "uniform float specularFactor;",
 
       "void main(void) {",
+        "fTextureCoord = vTextureCoord;",
+
         "vec4 position = vec4( vPosition, 1.0 );",
         "vec4 normal = vec4(vNormal, 0.0 );",
-
 
         "fN = (matrixModel * normal).xyz;",
         "fV = cameraPosition - (matrixModel * position).xyz;",
@@ -52,8 +59,8 @@ ENGINE.Shaders = {
           "L = normalize(fL[i]);",
           "H = normalize(L + V);",
 
-          "diffuse += max(dot(L,N),0.0) * diffuseFactor * color;",
-          "specular += pow(max(dot(N,H),0.0),50.0) * specularFactor * vec4(1.0,1.0,1.0,1.0);",
+          "diffuse += max(dot(L,N),0.0) * diffuseFactor;",
+          "specular += pow(max(dot(N,H),0.0),50.0) * specularFactor;",
         "}",
         "if(dot(L,N) < 0.0){",
         "    specular = vec4(0.0,0.0,0.0,1.0);",
@@ -66,9 +73,10 @@ ENGINE.Shaders = {
         "if(diffuse.a > 1.0) {",
           "    diffuse.a = 1.0;",
         "}",
-
-        "fColor = ambient + diffuse + specular;",
-        "fColor.a = 1.0;",
+        
+        "fAmbient = ambient;",
+        "fDiffuse = diffuse;",
+        "fSpecular = specular;",
 
         "gl_Position = matrixProjection * matrixView * matrixModel * vec4(vPosition, 1.0);",
       "}"
@@ -77,15 +85,26 @@ ENGINE.Shaders = {
     fragmentShader: [
       "precision mediump float;",
 
-      "uniform vec4 color;",
+      "varying vec2 fTextureCoord;",
 
-      "varying vec4 fColor;",
+      "varying vec4 fAmbient;",
+      "varying vec4 fDiffuse;",
+      "varying vec4 fSpecular;",
+
+      "uniform int useTexture;",
+      
+      "uniform sampler2D sampler;",
+
+      "uniform vec4 color;",
     
       "void main(void) {",
+        "vec4 lightWeight = fAmbient + fDiffuse;",
+        "vec4 specular = fSpecular * vec4(1.0, 1.0, 1.0, 1.0);",
 
-        
+        "vec4 texColor = texture2D( sampler, fTextureCoord );",
+        "vec4 fColor = useTexture == 1 ?  texColor : color;",
 
-        "gl_FragColor = fColor;",
+        "gl_FragColor = ( fColor* lightWeight) + specular;",
       "}"
     ].join('\n')
   

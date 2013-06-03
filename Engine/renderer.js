@@ -22,7 +22,7 @@ ENGINE.Renderer = function ( args ) {
       return;
     }
 
-    _gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    _gl.clearColor(1.0, 1.0, 1.0, 1.0);
     _gl.viewport( 0, 0, _canvas.width, _canvas.height );
     _gl.enable(_gl.DEPTH_TEST);
 
@@ -44,6 +44,12 @@ ENGINE.Renderer = function ( args ) {
       var object = renderList[i];
       var program; //TODO: get the appropriate shader
 
+      if ( object.texture ) {
+        if ( !object.texture.__webglTexture )
+          initTexture( object );
+        bindTexture ( object.texture ); 
+      }
+
       setProgram( scene, object, camera );
 
       var program = _currentProgram;
@@ -59,6 +65,18 @@ ENGINE.Renderer = function ( args ) {
         _gl.vertexAttribPointer( program.vNormal, 3, _gl.FLOAT, false, 0, 0 );
       }
       _gl.drawArrays( _gl.TRIANGLES, 0, object.geometry.vertices.length );
+
+      //texture coords
+      if ( object.texture ) {
+        _gl.bindBuffer( _gl.ARRAY_BUFFER, object.texture.__webglUVBuffer );
+        _gl.enableVertexAttribArray( program.vTextureCoord );
+        _gl.vertexAttribPointer( program.vTextureCoord, 2, _gl.FLOAT, false, 0, 0 );
+      }
+      
+        
+      _gl.drawArrays( _gl.TRIANGLES, 0, object.geometry.vertices.length );
+      
+
     }
 
 
@@ -72,24 +90,33 @@ ENGINE.Renderer = function ( args ) {
       
       //create the gl buffers if they don't exist
       if ( ! object.geometry.__webglVertexBuffer ) {
-        createGeometryBuffers( object.geometry );
+        createBuffers( object );
       }
 
       //bind the buffer data
-      updateGeometryBuffers( object.geometry );
+      updateBuffers( object );
 
       
       scene.objectsAdded.splice( 0, 1 );
     }
   };
 
-  function createGeometryBuffers( geometry ) {
+  function createBuffers( object ) {
+    var geometry = object.geometry;
+
     geometry.__webglVertexBuffer = _gl.createBuffer();
     geometry.__webglNormalBuffer = _gl.createBuffer();
+
+    if ( object.texture !== undefined ) {
+      object.texture.__webglUVBuffer = _gl.createBuffer();
+    }
+
     //TODO: color?
   };
 
-  function updateGeometryBuffers( geometry ) {
+  function updateBuffers( object ) {
+    var geometry = object.geometry
+
     if ( !geometry.__webglVertices ) {
       geometry.__webglVertices = [];
       for ( var a = 0; a < geometry.vertices.length; a++ ) {
@@ -112,7 +139,22 @@ ENGINE.Renderer = function ( args ) {
     }
     _gl.bindBuffer( _gl.ARRAY_BUFFER, geometry.__webglNormalBuffer );
     _gl.bufferData( _gl.ARRAY_BUFFER, new Float32Array(geometry.__webglNormals), _gl.STATIC_DRAW )
-  };
+
+    if ( object.texture ) {
+      var texture = object.texture
+    
+      if ( !texture.__webglUVs ) {
+        texture.__webglUVs = [];
+        for ( var a = 0; a < texture.UVs.length; a++ ) {
+          texture.__webglUVs.push( texture.UVs[a][0] );
+          texture.__webglUVs.push( texture.UVs[a][1] );
+        }
+      }
+      _gl.bindBuffer( _gl.ARRAY_BUFFER, texture.__webglUVBuffer );
+      _gl.bufferData( _gl.ARRAY_BUFFER, new Float32Array(texture.__webglUVs), _gl.STATIC_DRAW )
+  }
+
+};
 
   
   
@@ -132,6 +174,46 @@ ENGINE.Renderer = function ( args ) {
     this.gl = _gl;
 
   };
+
+  //
+  //texture stuff
+  //
+  
+  function initTexture ( object ) {
+    var texture = object.texture;
+    if ( !texture.__webglTexture ) {
+      texture.__webglTexture = _gl.createTexture();
+      _gl.bindTexture(_gl.TEXTURE_2D, texture.__webglTexture);
+      _gl.texParameteri(_gl.TEXTURE_2D, _gl.TEXTURE_MAG_FILTER, _gl.NEAREST);
+      _gl.texParameteri(_gl.TEXTURE_2D, _gl.TEXTURE_MIN_FILTER, _gl.NEAREST);
+      
+      if ( !texture.textureSet ) {
+        texture.__webglTexture.image = texture.image;
+        if ( texture.image.loaded ) {
+          setTexture( texture );
+        }
+        else {
+          texture.__webglTexture.image.onload = function () { setTexture( texture ); };
+        }
+      }
+    }
+  };
+
+  function setTexture ( textureObject ) {
+    var texture = textureObject.__webglTexture;
+
+    _gl.bindTexture(_gl.TEXTURE_2D, texture);
+    _gl.texImage2D(_gl.TEXTURE_2D, 0, _gl.RGBA, _gl.RGBA, _gl.UNSIGNED_BYTE, textureObject.image);
+    textureObject.textureSet = true;
+  };
+
+  function bindTexture ( textureObject ) {
+    var texture = textureObject.__webglTexture;
+
+    _gl.activeTexture( _gl.TEXTURE0 );
+    _gl.bindTexture( _gl.TEXTURE_2D, texture );
+  };
+
 
   //
   //shader stuff
@@ -158,6 +240,7 @@ ENGINE.Renderer = function ( args ) {
     //attribute stuffs
     program.vPosition = _gl.getAttribLocation( program, "vPosition" );
     program.vNormal = _gl.getAttribLocation( program, "vNormal" );
+    program.vTextureCoord = _gl.getAttribLocation( program, "vTextureCoord" );
 
     //set the uniforms
     //
@@ -195,6 +278,15 @@ ENGINE.Renderer = function ( args ) {
         new Int32Array( scene.__webglUseLight ) );
     _gl.uniform3fv( _gl.getUniformLocation(program, "cameraPosition"),
         camera.position );
+
+    //textures
+    var useTex = object.texture && object.texture.__webglTexture ? 1 : 0;
+    _gl.uniform1i( _gl.getUniformLocation(program, "useTexture"),
+      useTex );
+    if ( useTex ) {
+      _gl.uniform1i( _gl.getUniformLocation(program, "sampler"),
+        object.texture.sampler );
+    }
 
   };
 

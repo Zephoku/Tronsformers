@@ -5,6 +5,9 @@ ENGINE.Object3D = function( geometry, material ) {
   this.specularFactor = 0.5; //0 for no specular
   this.diffuseFactor = 0.5;
 
+  //texture properties
+  this.texture;
+
   this.color = vec4.fromValues( 0.0, 0.0, 0.0, 1.0 ); //black
 
   this.position = vec3.create();
@@ -14,4 +17,15 @@ ENGINE.Object3D = function( geometry, material ) {
   this.matrixWorld = mat4.create(); //matrix to world space
 }
 
-ENGINE.Object3D.prototype = {};
+ENGINE.Object3D.prototype.initTexture = function ( image ) {
+  if ( this.texture === undefined ) {
+    this.texture = {};
+    this.texture.UVs = [];
+    this.texture.sampler = 0;
+  }
+  this.texture.image = new Image();
+  this.texture.image.src = image;
+  this.texture.image.onload = function () {
+    this.loaded = true;
+  }
+};
