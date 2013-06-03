@@ -18,7 +18,7 @@ ENGINE.Geometry.prototype = {
 
       vec3.subtract( cb, this.vertices[face.c], this.vertices[face.b] );
       vec3.subtract( ab, this.vertices[face.a], this.vertices[face.b] );
-      vec3.cross( ab, cb, ab );
+      vec3.cross( ab, ab, cb );
       
       vec3.normalize( ab, ab );
 

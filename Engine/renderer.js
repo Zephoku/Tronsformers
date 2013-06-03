@@ -183,12 +183,18 @@ ENGINE.Renderer = function ( args ) {
         scene.ambientFactor );
     _gl.uniform1f( _gl.getUniformLocation(program, "specularFactor"),
         object.specularFactor );
+    _gl.uniform1f( _gl.getUniformLocation(program, "diffuseFactor"),
+        object.diffuseFactor );
     _gl.uniform1i( _gl.getUniformLocation(program, "numLights"),
         scene.lights.length );
 
     scene.setGLLightPosition();
     _gl.uniform3fv( _gl.getUniformLocation(program, "lightPosition"),
         new Float32Array( scene.__webglLightPosition ) );
+    _gl.uniform1i( _gl.getUniformLocation(program, "useLight"),
+        new Int32Array( scene.__webglUseLight ) );
+    _gl.uniform3fv( _gl.getUniformLocation(program, "cameraPosition"),
+        camera.position );
 
   };
 
