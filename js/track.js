@@ -5,6 +5,12 @@ var canvasOverlay = document.getElementById('overlay')
 var debugOverlay = document.getElementById('debug');
 var overlayContext = canvasOverlay.getContext('2d');
 
+// Control Variables
+var cameraX = 0.0;
+var cameraY = 3.0;
+var cameraZ = 9.0;
+
+
 // Custom Messages
 statusMessages = {
   "getUserMedia" : "getUserMedia seems to be supported",
@@ -39,7 +45,8 @@ var htracker = new headtrackr.Tracker({
   ui: true, 
     calcAngles: true, 
     headPosition: true, 
-    debug :debugOverlay
+    debug :debugOverlay,
+    fadeVideo: true
 });
 
 htracker.init(videoInput, canvasInput);
@@ -49,7 +56,7 @@ htracker.start();
 function drawFaceRectangle(event) {
   overlayContext.translate(event.x, event.y);
   overlayContext.rotate(event.angle-(Math.PI/2));
-  overlayContext.strokeStyle = "#00CC00";
+  overlayContext.strokeStyle = "#777";
   overlayContext.strokeRect((-(event.width/2)) >> 0, (-(event.height/2)) >> 0, event.width, event.height);
   overlayContext.rotate((Math.PI/2)-event.angle);
   overlayContext.translate(-event.x, -event.y);
@@ -58,9 +65,9 @@ function drawFaceRectangle(event) {
 // Update Debug Messages on Screen
 function updateFaceDebugMessages(event) {
   var messagep = document.getElementById('headtrackerX');
-  messagep.innerHTML = event.x;
+  messagep.innerHTML = cameraX;
   var messagep = document.getElementById('headtrackerY');
-  messagep.innerHTML = event.y;
+  messagep.innerHTML = cameraY;
   var messagep = document.getElementById('headtrackerHeight');
   messagep.innerHTML = event.height;
   var messagep = document.getElementById('headtrackerWidth');
@@ -68,18 +75,6 @@ function updateFaceDebugMessages(event) {
   var messagep = document.getElementById('headtrackerAngle');
   messagep.innerHTML = event.angle * 180/Math.PI;
 }
-
-// Face Detection
-document.addEventListener("facetrackingEvent", function( event ) {
-  // Clear Canvas
-  overlayContext.clearRect(0,0,320,240);
-
-  // Check for stable detection
-  if (event.detection == "CS") {
-    drawFaceRectangle(event);
-    updateFaceDebugMessages(event);
-  }
-});
 
 // turn off or on the canvas showing probability
 function showProbabilityCanvas() {
