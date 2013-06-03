@@ -1,20 +1,51 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
   <head>
     <title>HeadTrackr.js</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
     <meta charset="utf-8">
-    <script src="lib/headtrackr.js"></script>
     <link rel="stylesheet" href="css/main.css">
 
+    <script src="lib/headtrackr.js"></script>
+
+    <script type="text/javascript">ENGINE = {};</script>
+    <script type="text/javascript" src="lib/gl-matrix-min.js"></script>
+    <script type="text/javascript" src="lib/webgl-utils.js"></script>
+    <script type="text/javascript" src="Engine/object.js"></script>
+    <script type="text/javascript" src="Engine/face.js"></script>
+    <script type="text/javascript" src="Engine/renderer.js"></script>
+    <script type="text/javascript" src="Engine/camera.js"></script>
+    <script type="text/javascript" src="Engine/shaders.js"></script>
+    <script type="text/javascript" src="Engine/geometry.js"></script>
+    <script type="text/javascript" src="Engine/scene.js"></script>
+    <script type="text/javascript" src="Engine/light.js"></script>
+
+    <link rel="stylesheet" href="css/main.css">
   </head>
-  <body>
+   <body onload='start(); 'value="Render" />
+
+    <div id="glContainer">
+      <canvas id="glCanvas" style="border: none;" width="500" height="500"></canvas>
+      <div class="title">
+        <h1>Tronsformers</h1>
+        <h4>A graphics project by Kirby Cool, David Mao, Robert Nguyen, Rohit Seth</h4>
+        <p>
+        <strong>Directions:</strong><br>
+        Tilt your head left and right to turn. <br>
+        Move closer to the camera to accelerate. <br>
+        Move back to reverse. 
+        <p>
+
+        </p>
+      </div>
+    </div>
+
     <!-- Canvas for drawing video from Camera --> 
     <canvas id="compare" width="320" height="240" style="display:none"></canvas>
     <video id="vid" autoplay loop width="320" height="240"></video>
     <canvas id="overlay" width="320" height="240"></canvas>
     <canvas id="debug" width="320" height="240"></canvas>
-    
+
     <!-- Status and Error Messages -->
     <p id='gUMMessage'></p>
     <p>Status : <span id='headtrackerMessage'></span></p>
@@ -26,12 +57,18 @@
     <input type="checkbox" onclick="showProbabilityCanvas()" value="asdfasd"></input>Show probability-map</p>
     <p>X: <span id='headtrackerX'></span></p>
     <p>Y: <span id='headtrackerY'></span></p>
+    <p>Z: <span id='headtrackerZ'></span></p>
     <p>Height:: <span id='headtrackerHeight'></span></p>
     <p>Width: <span id='headtrackerWidth'></span></p>
     <p>Angle: <span id='headtrackerAngle'></span></p>
 
     <!-- Headtracker init and update -->
     <script src="js/track.js"></script>
+
+    <!-- Game setup -->
+    <script type="text/javascript" src="js/game_controls"></script>
+    <script type="text/javascript" src="js/game_set_up.js"></script>
+
 
   </body>
 </html>
