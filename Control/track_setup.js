@@ -5,12 +5,6 @@ var canvasOverlay = document.getElementById('overlay')
 var debugOverlay = document.getElementById('debug');
 var overlayContext = canvasOverlay.getContext('2d');
 
-// Control Variables
-var cameraX = 0.0;
-var cameraY = 3.0;
-var cameraZ = 9.0;
-
-
 // Custom Messages
 statusMessages = {
   "getUserMedia" : "getUserMedia seems to be supported",
@@ -45,8 +39,7 @@ var htracker = new headtrackr.Tracker({
   ui: true, 
     calcAngles: true, 
     headPosition: true, 
-    debug :debugOverlay,
-    fadeVideo: true
+    debug :debugOverlay
 });
 
 htracker.init(videoInput, canvasInput);
@@ -56,53 +49,23 @@ htracker.start();
 function drawFaceRectangle(event) {
   overlayContext.translate(event.x, event.y);
   overlayContext.rotate(event.angle-(Math.PI/2));
-  overlayContext.strokeStyle = "#777";
+  overlayContext.strokeStyle = "#00CC00";
   overlayContext.strokeRect((-(event.width/2)) >> 0, (-(event.height/2)) >> 0, event.width, event.height);
   overlayContext.rotate((Math.PI/2)-event.angle);
   overlayContext.translate(-event.x, -event.y);
 }
 
-// // Turning Angle
-// // Derived from the angle of head
-// function turningAngle(event) {
-//   return (-1 * (event.angle * 180/Math.PI - 90));
-// }
+// Face Detection
+document.addEventListener("facetrackingEvent", function( event ) {
+  // Clear Canvas
+  overlayContext.clearRect(0,0,320,240);
 
-// // Speed
-// // Derived from the size of your head (proximity from the webcam)
-// // 100 is the base speed
-// // 140 is the base height
-// function speed(event) {
-//   var speed = 100 + 2*(event.height - 140);
-//   return speed;
-// }
-
-// Update Debug Messages on Screen
-function updateFaceDebugMessages(event) {
-  var messagep = document.getElementById('headtrackerX');
-  messagep.innerHTML = cameraX;
-  var messagep = document.getElementById('headtrackerY');
-  messagep.innerHTML = cameraY;
-  var messagep = document.getElementById('headtrackerHeight');
-  messagep.innerHTML = event.height;
-  var messagep = document.getElementById('headtrackerWidth');
-  messagep.innerHTML = event.width;
-  var messagep = document.getElementById('headtrackerAngle');
-  messagep.innerHTML = event.angle * 180/Math.PI;
-  // var messagep = document.getElementById('turningAngle');
-  // messagep.innerHTML = turningAngle(event);
-  // var messagep = document.getElementById('speed');
-  // messagep.innerHTML = user_control(event);
-  // messagep.innerHTML = speed(event);
-
-}
-
-// turn off or on the canvas showing probability
-function showProbabilityCanvas() {
-  var debugCanvas = document.getElementById('debug');
-  if (debugCanvas.style.display == 'none') {
-    debugCanvas.style.display = 'block';
-  } else {
-    debugCanvas.style.display = 'none';
+  // Check for stable detection
+  if (event.detection == "CS") {
+    drawFaceRectangle(event);
+    turningAngle(event);
+    speed(event);
+    updateUserControl(event);
+    updateUserPosition(event);
   }
-}
+});
