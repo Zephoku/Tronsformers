@@ -3,7 +3,7 @@ ENGINE.Shaders = {
   'basic': {
 
     vertexShader: [
-      "#define MAX_LIGHTS 10",
+      "#define MAX_LIGHTS 4",
 
       "attribute vec3 vPosition;",
       "attribute vec3 vNormal;",
@@ -17,6 +17,7 @@ ENGINE.Shaders = {
 
       "uniform vec3 cameraPosition;",
       "uniform vec3 lightPosition[MAX_LIGHTS];",
+      //"uniform int useLight[MAX_LIGHTS];",
 
       "varying vec3 fN; //normal at current position",
       "varying vec3 fV; //vector from point to viewer",
@@ -25,7 +26,6 @@ ENGINE.Shaders = {
       "uniform float ambientFactor;",
       "uniform float diffuseFactor;",     
       "uniform float specularFactor;",
-      "uniform int numLights;",
 
       "void main(void) {",
         "vec4 position = vec4( vPosition, 1.0 );",
@@ -35,7 +35,7 @@ ENGINE.Shaders = {
         "fN = (matrixModel * normal).xyz;",
         "fV = cameraPosition - (matrixModel * position).xyz;",
         "for ( int i = 0; i < MAX_LIGHTS; i++ ) {",
-          "if ( i >= numLights ) break;",
+          //"if ( useLight[i] == 0 ) continue;",
           "fL[i] = lightPosition[i] - (matrixModel * position).xyz;",
         "}",
 
@@ -48,7 +48,7 @@ ENGINE.Shaders = {
         "vec4 specular = vec4(0.0, 0.0, 0.0, 1.0);",
         
         "for ( int i = 0; i < MAX_LIGHTS; i++ ) {",
-          "if ( i >= numLights ) break;",
+          //"if ( useLight[i] == 0 ) continue;",
           "L = normalize(fL[i]);",
           "H = normalize(L + V);",
 

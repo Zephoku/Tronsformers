@@ -3,6 +3,7 @@ ENGINE.Object3D = function( geometry, material ) {
   this.material = material !== undefined ? material : null;
   //material properties until material object implemented
   this.specularFactor = 0.5; //0 for no specular
+  this.diffuseFactor = 0.5;
 
   this.color = vec4.fromValues( 0.0, 0.0, 0.0, 1.0 ); //black
 

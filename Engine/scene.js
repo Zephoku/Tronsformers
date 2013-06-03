@@ -5,10 +5,11 @@ ENGINE.Scene = function () {
   this.objectsAdded = [];
   this.objectsRemoved = [];
 
-  this.ambientFactor = 1.0;
+  this.ambientFactor = 0.3;
   this.__webglLightPosition = [];
+  this.__webglUseLight = [];
 
-  this.MAX_LIGHTS = 10;
+  this.MAX_LIGHTS = 4;
 }
 
 ENGINE.Scene.prototype.addObject = function ( object ) {
@@ -60,10 +61,12 @@ ENGINE.Scene.prototype.setGLLightPosition = function () {
     this.__webglLightPosition.push( this.lights[i].position[0] );
     this.__webglLightPosition.push( this.lights[i].position[1] );
     this.__webglLightPosition.push( this.lights[i].position[2] );
+    this.__webglUseLight.push( 1 );
   }
 
   while ( this.__webglLightPosition.length < this.MAX_LIGHTS * 3 ) {
     this.__webglLightPosition.push( 0.0 );
+    this.__webglUseLight.push( 0 );
   }
 
 }
