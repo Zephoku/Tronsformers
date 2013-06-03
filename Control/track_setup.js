@@ -55,41 +55,6 @@ function drawFaceRectangle(event) {
   overlayContext.translate(-event.x, -event.y);
 }
 
-// // Turning Angle
-// // Derived from the angle of head
-// function turningAngle(event) {
-//   return (-1 * (event.angle * 180/Math.PI - 90));
-// }
-
-// // Speed
-// // Derived from the size of your head (proximity from the webcam)
-// // 100 is the base speed
-// // 140 is the base height
-// function speed(event) {
-//   var speed = 100 + 2*(event.height - 140);
-//   return speed;
-// }
-
-// Update Debug Messages on Screen
-function updateFaceDebugMessages(event) {
-  var messagep = document.getElementById('headtrackerX');
-  messagep.innerHTML = event.x;
-  var messagep = document.getElementById('headtrackerY');
-  messagep.innerHTML = event.y;
-  var messagep = document.getElementById('headtrackerHeight');
-  messagep.innerHTML = event.height;
-  var messagep = document.getElementById('headtrackerWidth');
-  messagep.innerHTML = event.width;
-  var messagep = document.getElementById('headtrackerAngle');
-  messagep.innerHTML = event.angle * 180/Math.PI;
-  // var messagep = document.getElementById('turningAngle');
-  // messagep.innerHTML = turningAngle(event);
-  // var messagep = document.getElementById('speed');
-  // messagep.innerHTML = user_control(event);
-  // messagep.innerHTML = speed(event);
-
-}
-
 // Face Detection
 document.addEventListener("facetrackingEvent", function( event ) {
   // Clear Canvas
@@ -98,18 +63,9 @@ document.addEventListener("facetrackingEvent", function( event ) {
   // Check for stable detection
   if (event.detection == "CS") {
     drawFaceRectangle(event);
-    // updateFaceDebugMessages(event);
-    // Call the user control in control.js
-    user_control(event);
+    turningAngle(event);
+    speed(event);
+    updateUserControl(event);
+    updateUserPosition(event);
   }
 });
-
-// turn off or on the canvas showing probability
-function showProbabilityCanvas() {
-  var debugCanvas = document.getElementById('debug');
-  if (debugCanvas.style.display == 'none') {
-    debugCanvas.style.display = 'block';
-  } else {
-    debugCanvas.style.display = 'none';
-  }
-}
