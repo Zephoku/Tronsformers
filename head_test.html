@@ -37,11 +37,16 @@
         flying at your face! <br>
         <p>
 
+        <p>
+        <input type="button" onclick="htracker.stop();htracker.start();" value="Find Face"></input>
+        <br>
+        <br>
         <input type="button" onclick="ballRate = .5" value="Easy"></input>
         <input type="button" onclick="ballRate = 1.5" value="Medium"></input>
         <input type="button" onclick="ballRate = 3.0" value="Hard"></input>
         <input type="button" onclick="replay()" value="Replay"></input>
         <strong><p id="topscore-container">Top Score: <span id='topscore'></span></p></strong>
+        </p>
         </p>
       </div>
     </div>
@@ -56,7 +61,6 @@
     <!-- Status and Error Messages -->
     <p id='gUMMessage'></p>
     <p>Status : <span id='headtrackerMessage'></span></p>
-    <p><input type="button" onclick="htracker.stop();htracker.start();" value="reinitiate facedetection"></input>
 
     <br/><br/>
 
