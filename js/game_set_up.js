@@ -126,6 +126,54 @@ cube.computeVertexNormals();
 envir.geometry = cube;
 envir.color = vec4.fromValues( 0.53, .85, 1.0, 1.0 );
 envir.drawShadow = false;
+
+envir.initTexture( 'texture/world.png' );
+
+var uv = envir.texture.UVs;
+uv.push( vec3.fromValues( 0.0, 0.5 ) );
+uv.push( vec3.fromValues( 0.5, 0.5 ) );
+uv.push( vec3.fromValues( 0.5, 1.0 ) );
+uv.push( vec3.fromValues( 0.0, 0.5 ) );
+uv.push( vec3.fromValues( 0.5, 1.0 ) );
+uv.push( vec3.fromValues( 0.0, 1.0 ) );
+
+uv.push( vec3.fromValues( 0.0, 0.5 ) );
+uv.push( vec3.fromValues( 0.5, 0.5 ) );
+uv.push( vec3.fromValues( 0.5, 1.0 ) );
+uv.push( vec3.fromValues( 0.0, 0.5 ) );
+uv.push( vec3.fromValues( 0.5, 1.0 ) );
+uv.push( vec3.fromValues( 0.0, 1.0 ) );
+
+uv.push( vec3.fromValues( 0.0, 0.0 ) );
+uv.push( vec3.fromValues( 0.5, 0.0 ) );
+uv.push( vec3.fromValues( 0.5, 0.5 ) );
+uv.push( vec3.fromValues( 0.0, 0.0 ) );
+uv.push( vec3.fromValues( 0.5, 0.5 ) );
+uv.push( vec3.fromValues( 0.0, 0.5 ) );
+
+uv.push( vec3.fromValues( 0.0, 0.0 ) );
+uv.push( vec3.fromValues( 0.5, 0.0 ) );
+uv.push( vec3.fromValues( 0.5, 0.5 ) );
+uv.push( vec3.fromValues( 0.0, 0.0 ) );
+uv.push( vec3.fromValues( 0.5, 0.5 ) );
+uv.push( vec3.fromValues( 0.0, 0.5 ) );
+
+uv.push( vec3.fromValues( 0.0, 0.5 ) );
+uv.push( vec3.fromValues( 0.5, 0.5 ) );
+uv.push( vec3.fromValues( 0.5, 1.0 ) );
+uv.push( vec3.fromValues( 0.0, 0.5 ) );
+uv.push( vec3.fromValues( 0.5, 1.0 ) );
+uv.push( vec3.fromValues( 0.0, 1.0 ) );
+
+uv.push( vec3.fromValues( 0.0, 0.5 ) );
+uv.push( vec3.fromValues( 0.5, 0.5 ) );
+uv.push( vec3.fromValues( 0.5, 1.0 ) );
+uv.push( vec3.fromValues( 0.0, 0.5 ) );
+uv.push( vec3.fromValues( 0.5, 1.0 ) );
+uv.push( vec3.fromValues( 0.0, 1.0 ) );
+
+envir.texture.repeat = true;
+
 scene.addObject( envir );
 
 document.onkeydown = handleKeyDown;

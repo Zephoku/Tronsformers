@@ -24,6 +24,7 @@ ENGINE.Object3D.prototype.initTexture = function ( image ) {
     this.texture = {};
     this.texture.UVs = [];
     this.texture.sampler = 0;
+    this.texture.repeat = false;
   }
   this.texture.image = new Image();
   this.texture.image.src = image;
