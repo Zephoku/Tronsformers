@@ -3,7 +3,7 @@ ENGINE.Shaders = {
   'basic': {
 
     vertexShader: [
-      "#define MAX_LIGHTS 4",
+      "#define MAX_LIGHTS 1",
 
       "attribute vec3 vPosition;",
       "attribute vec3 vNormal;",
@@ -48,7 +48,11 @@ ENGINE.Shaders = {
 					"		0.0,  0.0,  lightPosition[0].y,  0.0,",
 					"		0.0,  0.0,  0.0,  lightPosition[0].y);",
 
-		      "gl_Position = matrixProjection * matrixView * sMatrix * matrixModel  * position;",
+          "vec4 shadowPosition = vec4(0.0, 0.0, 0.0, 1.0);",
+
+		      "vec4 sPosition = matrixModel * sMatrix * position;",
+          "sPosition.y = 0.0;",
+          "gl_Position = matrixProjection * matrixView * sPosition;",
         "}",
         "else {",
 
@@ -110,11 +114,11 @@ ENGINE.Shaders = {
       "uniform int useTexture;",
       "uniform sampler2D sampler;",
       "uniform vec4 color;",
-      "uniform int drawShadow;",
+      "uniform int drawShadows;",
 
       "void main(void) {",
-        "if ( drawShadow == 1 ) {",
-          "gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );",
+        "if ( drawShadows == 1 ) {",
+          "gl_FragColor = vec4( 0.0, 0.0, 0.0, 1.0 );",
         "}", 
         "else {",
           "vec4 lightWeight = fAmbient + fDiffuse;",

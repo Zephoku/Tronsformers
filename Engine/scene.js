@@ -5,7 +5,7 @@ ENGINE.Scene = function () {
   this.objectsAdded = [];
   this.objectsRemoved = [];
 
-  this.ambientFactor = 0.3;
+  this.ambientFactor = 0.5;
   this.__webglLightPosition = [];
   this.__webglUseLight = [];
 

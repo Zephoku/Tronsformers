@@ -37,7 +37,7 @@ ENGINE.Renderer = function ( args ) {
     renderObjects( scene.objects, scene, camera, lights );
 
     _drawShadows = 1;
-    //renderObjects( scene.objects, scene, camera, lights );
+    renderObjects( scene.objects, scene, camera, lights );
     _drawShadows = 0;
 
   };
@@ -258,7 +258,7 @@ ENGINE.Renderer = function ( args ) {
     if ( !object.__webglMatrixModel ) {
       object.__webglMatrixModel = mat4.create();
     }
-      mat4.multiply( object.__webglMatrixModel, object.matrixWorld, object.matrixModel );
+    mat4.multiply( object.__webglMatrixModel, object.matrixWorld, object.matrixModel );
     _gl.uniformMatrix4fv( _gl.getUniformLocation(program, "matrixModel"),
         false, object.__webglMatrixModel );
     _gl.uniformMatrix4fv( _gl.getUniformLocation(program, "matrixView"),
