@@ -5,7 +5,7 @@ var scene = new ENGINE.Scene();
 var camera = new ENGINE.Camera(90, 1, 1, 1000);
 var o = new ENGINE.Object3D();
 var light = new ENGINE.Light();
-// Cube
+// Cube - Environment
 var envir = new ENGINE.Object3D();
 
 // Lighting
@@ -18,6 +18,8 @@ renderer.initGL();
 var g = new ENGINE.Geometry();
 // cube is for boundaries of environment
 var cube = new ENGINE.Geometry();
+// cannonball is the geometry for a cannonball
+var ball = new ENGINE.Geometry();
 
 //pyramid geometry
 var index = 0;
@@ -128,6 +130,101 @@ scene.addObject( envir );
 document.onkeydown = handleKeyDown;
 document.onkeyup = handleKeyUp;
 
+
+
+
+
+
+
+
+
+
+// Cannonball geometry
+var index3 = 0;
+// ball_size is the size of the canonball (size of each side -- it's a square)
+var z_position = -100.0;
+var x_position = 5.0
+var ball_size = 2.0;
+// front face
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position+ball_size ));
+ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
+
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position+ball_size ));
+ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
+
+// back face
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position-ball_size ));
+ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
+
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position-ball_size ));
+ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
+
+// top face
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position+ball_size ));
+ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
+
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position-ball_size ));
+ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
+
+// bottom face
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position+ball_size ));
+ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
+
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position+ball_size ));
+ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
+
+// right face
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position+ball_size ));
+ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
+
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position+ball_size ));
+ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
+
+// left face
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position+ball_size ));
+ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
+
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position-ball_size ));
+ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
+
+ball.computeVertexNormals();
+
+var my_ball = new ENGINE.Object3D();
+my_ball.geometry = ball;
+my_ball.color = vec4.fromValues( 0.0, 0.0, 0.0, 1.0 );
+scene.addObject( my_ball );
+
+var my_ball_2 = new ENGINE.Object3D();
+my_ball_2.geometry = ball;
+my_ball_2.color = vec4.fromValues( 1.0, 1.0, 1.0, 1.0 );
+scene.addObject( my_ball_2 );
+
+
+
 cannonballCarrier = [];
 
 cannonball = function () {
@@ -141,12 +238,23 @@ cannonball = function () {
 var randomnumber = Math.floor(Math.random()*100);
 
 function generateCannonball() {
+
   if (cannonballCarrier.length > 50)
     return;
+
+
+  // maybe this goes here
+  // var my_ball = new ENGINE.Object3D();
+  // my_ball.geometry = cannonball;
+  // my_ball.color = vec4.fromValues( 1.0, 1.0, 1.0, 1.0 );
+  // scene.addObject( my_ball );
+  // continue this
+
   var coinFlip = Math.floor(Math.random()*100);
   if (coinFlip > 75)
   {
     var can = new cannonball();
+
 
     can.x = Math.floor((Math.random()*100)+1);
     can.y = Math.floor((Math.random()*100)+1);
@@ -160,6 +268,9 @@ function generateCannonball() {
     transVec[2] = can.z;
     mat4.translate(can.o.matrixWorld, can.o.matrixWorld, transVec);
     can.origMat = mat4.clone(can.o.matrixWorld);
+
+    cannonball.x = Math.floor(Math.random()*100);
+    // cannonball.y = Math.floor(Math.random()*100);
 
     cannonballCarrier.push(can);
     scene.addObject( can.o );
@@ -216,9 +327,17 @@ function update() {
     }
     cannonballCarrier[i].z -= ballRate;
 
-  }
+
+  // }
 
   updateBalls();
+
+  // cannon objects run at you
+  // If hit z = 0; 1 point
+  // If x and y = you, you die
+
+  vec3.add(camera.lookAt, camera.lookAt, transVec);
+
   camera.update();
   renderer.render( scene, camera ); 
 }
