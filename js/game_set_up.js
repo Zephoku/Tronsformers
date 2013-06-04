@@ -359,9 +359,9 @@ function update() {
         score += 1;
       scene.removeObject(cannonballCarrier[i].o);
     }
-    if (cannonballCarrier[i].x == cameraX &&
-        cannonballCarrier[i].y == cameraY &&
-        cannonballCarrier[i].z == cameraZ )
+    if ((Math.abs(cannonballCarrier[i].x - cameraX ) <= 2) &&
+        (Math.abs(cannonballCarrier[i].y - cameraY ) <= 2) &&
+        (Math.abs(cannonballCarrier[i].z - cameraZ ) <= 2) )
     {
       isDead = true;
     }
