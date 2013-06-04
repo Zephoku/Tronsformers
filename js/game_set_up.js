@@ -20,37 +20,37 @@ var g = new ENGINE.Geometry();
 var cube = new ENGINE.Geometry();
 
 //pyramid geometry
-// var index = 0;
-// index = g.vertices.push( vec3.fromValues( 0.0, 0.0, 1.0 ) );
-// index = g.vertices.push( vec3.fromValues( -1.0, 0.0, -1.0 ) );
-// index = g.vertices.push( vec3.fromValues( 1.0, 0.0, -1.0 ) );
-// g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
+ var index = 0;
+ index = g.vertices.push( vec3.fromValues( 0.0, 0.0, 1.0 ) );
+ index = g.vertices.push( vec3.fromValues( -1.0, 0.0, -1.0 ) );
+ index = g.vertices.push( vec3.fromValues( 1.0, 0.0, -1.0 ) );
+ g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
 
-// index = g.vertices.push( vec3.fromValues( 0.0, 0.0, 1.0 ) );
-// index = g.vertices.push( vec3.fromValues( -1.0, 0.0, -1.0 ) );
-// index = g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
-// g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
+ index = g.vertices.push( vec3.fromValues( 0.0, 0.0, 1.0 ) );
+ index = g.vertices.push( vec3.fromValues( -1.0, 0.0, -1.0 ) );
+ index = g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
+ g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
 
-// index = g.vertices.push( vec3.fromValues( 0.0, 0.0, 1.0 ) );
-// index = g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
-// index = g.vertices.push( vec3.fromValues( 1.0, 0.0, -1.0 ) );
-// g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
+ index = g.vertices.push( vec3.fromValues( 0.0, 0.0, 1.0 ) );
+ index = g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
+ index = g.vertices.push( vec3.fromValues( 1.0, 0.0, -1.0 ) );
+ g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
 
-// index = g.vertices.push( vec3.fromValues( 1.0, 0.0, -1.0 ) );
-// index = g.vertices.push( vec3.fromValues( -1.0, 0.0, -1.0 ) );
-// index = g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
-// g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
+ index = g.vertices.push( vec3.fromValues( 1.0, 0.0, -1.0 ) );
+ index = g.vertices.push( vec3.fromValues( -1.0, 0.0, -1.0 ) );
+ index = g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
+ g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
 
-// g.computeVertexNormals();
+ g.computeVertexNormals();
 
-// o.geometry = g;
-// o.color = vec4.fromValues( 1.0, 0.0, 0.0, 1.0 );
-// scene.addObject( o );
+ o.geometry = g;
+ o.color = vec4.fromValues( 1.0, 0.0, 0.0, 1.0 );
+ scene.addObject( o );
 
 // cube/environment geometry
 var index2 = 0;
 // envr_size is half the length of each side of the cube
-var envr_size = 100.0;
+var envr_size = 500.0;
 // height of camera above the ground
 var cam_height = 3.0;
 // front face
@@ -122,7 +122,7 @@ cube.faces.push( new ENGINE.Face( index2-3, index2-2, index2-1 ));
 cube.computeVertexNormals();
 
 envir.geometry = cube;
-envir.color = vec4.fromValues( 0.0, 1.0, 0.0, 1.0 );
+envir.color = vec4.fromValues( 0.53, .85, 1.0, 1.0 );
 scene.addObject( envir );
 
 
