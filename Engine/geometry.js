@@ -7,6 +7,23 @@ ENGINE.Geometry = function () {
 }
 
 ENGINE.Geometry.prototype = {
+
+  clone: function () {
+    var ng = new ENGINE.Geometry();
+    for ( var i = 0; i < this.faces.length; i++ ) {
+      ng.faces.push( this.faces[i].clone() );
+      ng.vertices[this.faces[i].a] = vec3.clone( this.vertices[ this.faces[i].a ] );
+      ng.vertices[this.faces[i].b] = vec3.clone( this.vertices[ this.faces[i].b ] );
+      ng.vertices[this.faces[i].c] = vec3.clone( this.vertices[ this.faces[i].c ] );
+
+      ng.normals[this.faces[i].a] = vec3.clone( this.normals[ this.faces[i].a ] );
+      ng.normals[this.faces[i].b] = vec3.clone( this.normals[ this.faces[i].b ] );
+      ng.normals[this.faces[i].c] = vec3.clone( this.normals[ this.faces[i].c ] );
+
+    }
+    ng.computeVertexNormals();
+    return ng;
+  },
   
   //computes the normal to each face and saves it in face.normal
   //adapted from three.js
