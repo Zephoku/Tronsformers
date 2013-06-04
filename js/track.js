@@ -10,6 +10,10 @@ var cameraX = 0;
 var cameraY = 0;
 var cameraZ = 30.0;
 
+var userPosX = 12;
+var userPosY = 12;
+var userPosZ = 3;
+
 // Custom Messages
 statusMessages = {
   "getUserMedia" : "getUserMedia seems to be supported",
@@ -61,21 +65,6 @@ function drawFaceRectangle(event) {
   overlayContext.translate(-event.x, -event.y);
 }
 
-// // Turning Angle
-// // Derived from the angle of head
-// function turningAngle(event) {
-//   return (-1 * (event.angle * 180/Math.PI - 90));
-// }
-
-// // Speed
-// // Derived from the size of your head (proximity from the webcam)
-// // 100 is the base speed
-// // 140 is the base height
-// function speed(event) {
-//   var speed = 100 + 2*(event.height - 140);
-//   return speed;
-// }
-
 // Update Debug Messages on Screen
 function updateFaceDebugMessages(event) {
   var messagep = document.getElementById('headtrackerX');
@@ -93,17 +82,52 @@ function updateFaceDebugMessages(event) {
   // var messagep = document.getElementById('turningAngle');
   // messagep.innerHTML = turningAngle(event);
   // var messagep = document.getElementById('speed');
-  // messagep.innerHTML = user_control(event);
   // messagep.innerHTML = speed(event);
 
 }
 
 function updateCameraMovement(event){
-  cameraX = Math.floor((170 - event.x) );
-  cameraY = Math.floor((180 - event.y) );
+  cameraX = Math.floor((160 - event.x) );
+  cameraY = Math.floor((170 - event.y) );
   cameraZ = Math.floor(250/event.width *10);
 }
 
+
+var currentlyPressedKeys = {};
+
+function handleKeyDown(event) {
+  currentlyPressedKeys[event.keyCode] = true;
+
+  if (String.fromCharCode(event.keyCode) == "F") {
+
+  }
+}
+
+
+function handleKeyUp(event) {
+
+  currentlyPressedKeys[event.keyCode] = false;
+}
+
+
+function handleKeys() {
+  if (currentlyPressedKeys[65]) {
+    // Left cursor key
+    userPosX -= 1;
+  }
+  if (currentlyPressedKeys[68]) {
+    // Right cursor key
+    userPosX += 1;
+  }
+  if (currentlyPressedKeys[87]) {
+    // Up cursor key
+    userPosZ += 1;
+  }
+  if (currentlyPressedKeys[83]) {
+    // Down cursor key
+    userPosZ -= 1;
+  }
+}
 // Face Detection
 document.addEventListener("facetrackingEvent", function( event ) {
   // Clear Canvas
