@@ -18,6 +18,7 @@
     HIIIIIIIIII =)
     <canvas id="glCanvas" style="border: none;" width="500" height="500"></canvas>
     <input type=button onclick='renderer.render( scene, camera );' value="Render"/>
+    <img src="flower.jpg" />
   </body>
 
   <script type="text/javascript">
@@ -63,6 +64,14 @@
 
       o.geometry = g;
       o.color = vec4.fromValues( 1.0, 0.0, 0.0, 1.0 );
+      
+      //texture coords
+      o.initTexture( "flower.jpg" );
+      for ( var i = 0; i < 4; i++ ) {
+        o.texture.UVs.push( vec2.fromValues(1.0, 0.0) );
+        o.texture.UVs.push( vec2.fromValues(0.0, 0.0) );
+        o.texture.UVs.push( vec2.fromValues(0.0, 1.0) );
+      }
 
       scene.addObject( o );
 
