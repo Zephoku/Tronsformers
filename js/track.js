@@ -114,7 +114,6 @@ function handleKeys() {
   if (currentlyPressedKeys[65]) {
     // Left cursor key
     userPosX -= 1;
-  mat4.translate(o.matrixWorld, o.matrixWorld, transVec);
   }
   if (currentlyPressedKeys[68]) {
     // Right cursor key

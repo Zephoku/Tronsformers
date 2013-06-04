@@ -131,6 +131,21 @@ scene.addObject( o );
 document.onkeydown = handleKeyDown;
 document.onkeyup = handleKeyUp;
 
+cannonballCarrier = [];
+
+cannonball = function () {
+  this.x = 0;
+  this.y = 0;
+  this.z = 100;
+}
+
+var randomnumber = Math.floor(Math.random()*100);
+
+function generateCannonball() {
+  
+}
+
+var origMatrix = mat4.clone(o.matrixWorld);
 function update() {
   requestAnimFrame(update);
   handleKeys();
@@ -143,8 +158,13 @@ function update() {
   transVec[0] = userPosX;
   transVec[1] = userPosY;
   transVec[2] = userPosZ;
-  mat4.translate(o.matrixWorld, o.matrixWorld, transVec);
+  mat4.translate(o.matrixWorld, origMatrix, transVec);
 
+
+  // randomly spawn cannon objects
+  // cannon objects run at you
+  // If hit z = 0; 1 point
+  // If x and y = you, you die
 
   //vec3.add(camera.lookAt, camera.lookAt, transVec);
 
