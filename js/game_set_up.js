@@ -20,32 +20,32 @@ var g = new ENGINE.Geometry();
 var cube = new ENGINE.Geometry();
 
 //pyramid geometry
- var index = 0;
- index = g.vertices.push( vec3.fromValues( 0.0, 0.0, 1.0 ) );
- index = g.vertices.push( vec3.fromValues( -1.0, 0.0, -1.0 ) );
- index = g.vertices.push( vec3.fromValues( 1.0, 0.0, -1.0 ) );
- g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
+var index = 0;
+index = g.vertices.push( vec3.fromValues( 0.0, 0.0, 1.0 ) );
+index = g.vertices.push( vec3.fromValues( -1.0, 0.0, -1.0 ) );
+index = g.vertices.push( vec3.fromValues( 1.0, 0.0, -1.0 ) );
+g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
 
- index = g.vertices.push( vec3.fromValues( 0.0, 0.0, 1.0 ) );
- index = g.vertices.push( vec3.fromValues( -1.0, 0.0, -1.0 ) );
- index = g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
- g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
+index = g.vertices.push( vec3.fromValues( 0.0, 0.0, 1.0 ) );
+index = g.vertices.push( vec3.fromValues( -1.0, 0.0, -1.0 ) );
+index = g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
+g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
 
- index = g.vertices.push( vec3.fromValues( 0.0, 0.0, 1.0 ) );
- index = g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
- index = g.vertices.push( vec3.fromValues( 1.0, 0.0, -1.0 ) );
- g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
+index = g.vertices.push( vec3.fromValues( 0.0, 0.0, 1.0 ) );
+index = g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
+index = g.vertices.push( vec3.fromValues( 1.0, 0.0, -1.0 ) );
+g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
 
- index = g.vertices.push( vec3.fromValues( 1.0, 0.0, -1.0 ) );
- index = g.vertices.push( vec3.fromValues( -1.0, 0.0, -1.0 ) );
- index = g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
- g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
+index = g.vertices.push( vec3.fromValues( 1.0, 0.0, -1.0 ) );
+index = g.vertices.push( vec3.fromValues( -1.0, 0.0, -1.0 ) );
+index = g.vertices.push( vec3.fromValues( 0.0, 1.0, 0.0 ) );
+g.faces.push( new ENGINE.Face( index-3, index-2, index-1 ) );
 
- g.computeVertexNormals();
+g.computeVertexNormals();
 
- o.geometry = g;
- o.color = vec4.fromValues( 1.0, 0.0, 0.0, 1.0 );
- scene.addObject( o );
+o.geometry = g;
+o.color = vec4.fromValues( 1.0, 0.0, 0.0, 1.0 );
+scene.addObject( o );
 
 // cube/environment geometry
 var index2 = 0;
@@ -125,9 +125,6 @@ envir.geometry = cube;
 envir.color = vec4.fromValues( 0.53, .85, 1.0, 1.0 );
 scene.addObject( envir );
 
-o.geometry = g;
-o.color = vec4.fromValues( 1.0, 0.0, 0.0, 1.0 );
-scene.addObject( o );
 document.onkeydown = handleKeyDown;
 document.onkeyup = handleKeyUp;
 
@@ -137,22 +134,54 @@ cannonball = function () {
   this.x = 0;
   this.y = 0;
   this.z = 100;
+  this.o = new ENGINE.Object3D();
+  this.origMat = mat4.create();
 }
 
 var randomnumber = Math.floor(Math.random()*100);
 
 function generateCannonball() {
+  if (cannonballCarrier.length > 50)
+    return;
   var coinFlip = Math.floor(Math.random()*100);
-  if (coinFlip > 50)
+  if (coinFlip > 75)
   {
     var can = new cannonball();
-    cannonball.x = Math.floor(Math.random()*100);
-    cannonball.y = Math.floor(Math.random()*100);
+
+    can.x = Math.floor((Math.random()*100)+1);
+    can.y = Math.floor((Math.random()*100)+1);
+
+    can.o.geometry = g;
+    can.o.color = vec4.fromValues( 1.0, 1.0, 0.0, 1.0 );
+
+    var transVec = vec3.create();
+    transVec[0] = can.x;
+    transVec[1] = can.y;
+    transVec[2] = can.z;
+    mat4.translate(can.o.matrixWorld, can.o.matrixWorld, transVec);
+    can.origMat = mat4.clone(can.o.matrixWorld);
+
     cannonballCarrier.push(can);
+    scene.addObject( can.o );
   }
   else 
     return;
 }
+
+function updateBalls() {
+  for(var i = 0; i < cannonballCarrier.length; i++)
+  {
+    var transVec = vec3.create();
+    transVec[0] = cannonballCarrier[i].x;
+    transVec[1] = cannonballCarrier[i].y;
+    transVec[2] = cannonballCarrier[i].z;
+    mat4.translate(cannonballCarrier[i].o.matrixWorld, cannonballCarrier[i].origMat, transVec);
+  }
+}
+
+var score = 0;
+var ballRate = .50;
+var isDead = false;
 
 var origMatrix = mat4.clone(o.matrixWorld);
 function update() {
@@ -170,22 +199,26 @@ function update() {
   mat4.translate(o.matrixWorld, origMatrix, transVec);
 
   generateCannonball();
-  console.log(cannonballCarrier.length);
 
-  for( ball in cannonballCarrier )
+  for(var i = 0; i < cannonballCarrier.length; i++)
   {
-    if (z < 1)
+    if (cannonballCarrier[i].z < 1)
     {
+      cannonballCarrier.shift();
+      score += 1;
+      scene.removeObject(cannonballCarrier[i].o);
     }
+    if (cannonballCarrier[i].x == cameraX &&
+        cannonballCarrier[i].y == cameraY &&
+        cannonballCarrier[i].z == cameraZ )
+    {
+      isDead = true;
+    }
+    cannonballCarrier[i].z -= ballRate;
 
   }
 
-  // cannon objects run at you
-  // If hit z = 0; 1 point
-  // If x and y = you, you die
-
-  //vec3.add(camera.lookAt, camera.lookAt, transVec);
-
+  updateBalls();
   camera.update();
   renderer.render( scene, camera ); 
 }

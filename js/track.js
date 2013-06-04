@@ -141,6 +141,18 @@ document.addEventListener("facetrackingEvent", function( event ) {
 
     // Camera movement
     updateCameraMovement(event);
+
+    var messagep = document.getElementById('score');
+    if (isDead)
+    {
+      messagep.innerHTML = "YOU ARE DEAD. Final Score: " + score;
+      stop();
+    }
+    else
+      messagep.innerHTML = score;
+      
+
+
   }
 });
 
