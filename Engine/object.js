@@ -11,6 +11,8 @@ ENGINE.Object3D = function( geometry, material ) {
   this.color = vec4.fromValues( 0.0, 0.0, 0.0, 1.0 ); //black
 
   this.position = vec3.create();
+
+  this.drawShadow = true;
   
   //Matrices
   this.matrixModel = mat4.create(); //matrix to model space

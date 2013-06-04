@@ -9,7 +9,7 @@ var light = new ENGINE.Light();
 var envir = new ENGINE.Object3D();
 
 // Lighting
-light.position = vec3.fromValues( 2.0, 0.0, 0.0 );
+light.position = vec3.fromValues( 100.0, 500.0, 50.0 );
 scene.lights.push( light );
 
 // Init
@@ -125,6 +125,7 @@ cube.computeVertexNormals();
 
 envir.geometry = cube;
 envir.color = vec4.fromValues( 0.53, .85, 1.0, 1.0 );
+envir.drawShadow = false;
 scene.addObject( envir );
 
 document.onkeydown = handleKeyDown;
@@ -138,68 +139,68 @@ var z_position = -100.0;
 var x_position = 5.0
 var ball_size = 2.0;
 // front face
-index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position+ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position+ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position+ball_size ));
 ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
 
-index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position+ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position+ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position+ball_size ));
 ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
 
 // back face
-index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position-ball_size ));
 ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
 
-index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position-ball_size ));
 ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
 
 // top face
-index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position+ball_size ));
 ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
 
-index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position-ball_size ));
 ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
 
 // bottom face
-index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position+ball_size ));
 ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
 
-index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position+ball_size ));
 ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
 
 // right face
-index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position-ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position+ball_size ));
 ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
 
-index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position+ball_size, -ball_size, z_position+ball_size ));
 ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
 
 // left face
-index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position+ball_size ));
 ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
 
-index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position+ball_size ));
+index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, -ball_size, z_position-ball_size ));
 index3 = ball.vertices.push( vec3.fromValues( x_position-ball_size, ball_size, z_position-ball_size ));
 ball.faces.push( new ENGINE.Face( index3-3, index3-2, index3-1 ));
 
@@ -208,11 +209,13 @@ ball.computeVertexNormals();
 var my_ball = new ENGINE.Object3D();
 my_ball.geometry = ball;
 my_ball.color = vec4.fromValues( 0.0, 0.0, 0.0, 1.0 );
+my_ball.drawShadow = false;
 scene.addObject( my_ball );
 
 var my_ball_2 = new ENGINE.Object3D();
 my_ball_2.geometry = ball;
 my_ball_2.color = vec4.fromValues( 1.0, 1.0, 1.0, 1.0 );
+my_ball_2.drawShadow = false;
 scene.addObject( my_ball_2 );
 
 

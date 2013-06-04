@@ -7,12 +7,12 @@ var overlayContext = canvasOverlay.getContext('2d');
 
 // Control Variables
 var cameraX = 0;
-var cameraY = 10;
-var cameraZ = 20.0;
+var cameraY = 5.0;
+var cameraZ = 10.0;
 
-var userPosX = 3;
-var userPosY = 12;
-var userPosZ = 3;
+var userPosX = 0.0;
+var userPosY = 0.0;
+var userPosZ = 0.0;
 
 // Custom Messages
 statusMessages = {

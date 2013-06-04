@@ -41,18 +41,30 @@ ENGINE.Shaders = {
         "vec4 position = vec4( vPosition, 1.0 );",
         "vec4 normal = vec4(vNormal, 0.0 );",
 
-
-        "if ( drawShadows == 1 && (position * matrixModel).y >= 0.0 ) {",
+        "float shadowPlane = -2.0;",
+        "if ( drawShadows == 1 && (position * matrixModel).y >= shadowPlane ) {",
           "mat4 sMatrix = mat4 ( lightPosition[0].y,  0.0,  0.0,  0.0,",
 					"	   -lightPosition[0].x,  0.0, -lightPosition[0].z, -1.0,",
 					"		0.0,  0.0,  lightPosition[0].y,  0.0,",
 					"		0.0,  0.0,  0.0,  lightPosition[0].y);",
 
+          "vec4 mPosition = matrixModel * position;",
           "vec4 shadowPosition = vec4(0.0, 0.0, 0.0, 1.0);",
+          
+          "if (mPosition.x != lightPosition[0].x) {",
+            "float xSlope = (mPosition.y - lightPosition[0].y) / (mPosition.x - lightPosition[0].x);",
+            "shadowPosition.x = lightPosition[0].x - lightPosition[0].y / xSlope;",
+          "} else { shadowPosition.x = lightPosition[0].x; }",
+          "if (mPosition.z != lightPosition[0].z) {",
+            "float zSlope = (mPosition.y - lightPosition[0].y) / (mPosition.z - lightPosition[0].z);",
+            "shadowPosition.z = lightPosition[0].z - lightPosition[0].y / zSlope;",
+          "} else { shadowPosition.z = lightPosition[0].z; }",
 
-		      "vec4 sPosition = matrixModel * sMatrix * position;",
-          "sPosition.y = 0.0;",
-          "gl_Position = matrixProjection * matrixView * sPosition;",
+          "shadowPosition.y = shadowPlane;",        
+  
+          "//vec4 sPosition = matrixModel * sMatrix * position;",
+          "//sPosition.y = shadowPlane;",
+          "gl_Position = matrixProjection * matrixView * shadowPosition;",
         "}",
         "else {",
 

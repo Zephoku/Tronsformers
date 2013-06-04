@@ -27,7 +27,7 @@ ENGINE.Renderer = function ( args ) {
     _gl.viewport( 0, 0, _canvas.width, _canvas.height );
     _gl.enable(_gl.DEPTH_TEST);
 
-    var lights = scene.lights
+    var lights = scene.lights;
 
     //update matrices and objects
     this.initWebGLObjects( scene );
@@ -37,7 +37,12 @@ ENGINE.Renderer = function ( args ) {
     renderObjects( scene.objects, scene, camera, lights );
 
     _drawShadows = 1;
-    renderObjects( scene.objects, scene, camera, lights );
+    var shadowObjects = [];
+    for ( var i = 0; i < scene.objects.length; i++ ) {
+      if ( scene.objects[i].drawShadow )
+        shadowObjects.push( scene.objects[i] );
+    }
+    renderObjects( shadowObjects, scene, camera, lights );
     _drawShadows = 0;
 
   };
@@ -123,8 +128,6 @@ ENGINE.Renderer = function ( args ) {
     var geometry = object.geometry
 
     if ( !geometry.__webglVertices ) {
-      console.log( object );
-      console.log( object.geometry );
       geometry.__webglVertices = [];
       for ( var a = 0; a < geometry.vertices.length; a++ ) {
         geometry.__webglVertices.push( geometry.vertices[a][0] );
