@@ -142,7 +142,16 @@ cannonball = function () {
 var randomnumber = Math.floor(Math.random()*100);
 
 function generateCannonball() {
-  
+  var coinFlip = Math.floor(Math.random()*100);
+  if (coinFlip > 50)
+  {
+    var can = new cannonball();
+    cannonball.x = Math.floor(Math.random()*100);
+    cannonball.y = Math.floor(Math.random()*100);
+    cannonballCarrier.push(can);
+  }
+  else 
+    return;
 }
 
 var origMatrix = mat4.clone(o.matrixWorld);
@@ -160,8 +169,17 @@ function update() {
   transVec[2] = userPosZ;
   mat4.translate(o.matrixWorld, origMatrix, transVec);
 
+  generateCannonball();
+  console.log(cannonballCarrier.length);
 
-  // randomly spawn cannon objects
+  for( ball in cannonballCarrier )
+  {
+    if (z < 1)
+    {
+    }
+
+  }
+
   // cannon objects run at you
   // If hit z = 0; 1 point
   // If x and y = you, you die
