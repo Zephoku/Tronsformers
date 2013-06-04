@@ -6,6 +6,7 @@ ENGINE.Renderer = function ( args ) {
 
   //private
   var _renderer = this,
+      _drawShadows = false,
       _currentProgram,
       _gl
         ;
@@ -33,7 +34,11 @@ ENGINE.Renderer = function ( args ) {
 
     _gl.clear(_gl.COLOR_BUFFER_BIT | _gl.DEPTH_BUFFER_BIT);
     
-    renderObjects( scene.objects, scene, camera, lights )
+    renderObjects( scene.objects, scene, camera, lights );
+
+    _drawShadows = 1;
+    //renderObjects( scene.objects, scene, camera, lights );
+    _drawShadows = 0;
 
   };
 
@@ -274,8 +279,6 @@ ENGINE.Renderer = function ( args ) {
     scene.setGLLightPosition();
     _gl.uniform3fv( _gl.getUniformLocation(program, "lightPosition"),
         new Float32Array( scene.__webglLightPosition ) );
-    _gl.uniform1i( _gl.getUniformLocation(program, "useLight"),
-        new Int32Array( scene.__webglUseLight ) );
     _gl.uniform3fv( _gl.getUniformLocation(program, "cameraPosition"),
         camera.position );
 
@@ -287,6 +290,10 @@ ENGINE.Renderer = function ( args ) {
       _gl.uniform1i( _gl.getUniformLocation(program, "sampler"),
         object.texture.sampler );
     }
+
+    //shadows
+    _gl.uniform1i( _gl.getUniformLocation(program, "drawShadows"),
+      _drawShadows ) 
 
   };
 
