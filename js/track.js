@@ -130,7 +130,8 @@ function handleKeys() {
     userPosZ -= 1;
   }
 }
-var final_score = 0;
+
+var topScore = 0;
 // Face Detection
 document.addEventListener("facetrackingEvent", function( event ) {
   // Clear Canvas
@@ -148,9 +149,12 @@ document.addEventListener("facetrackingEvent", function( event ) {
     var messagep = document.getElementById('score');
     if (isDead)
     {
-      final_score = score;
-      
-      messagep.innerHTML = "YOU ARE DEAD. Final Score: " + final_score;
+      messagep.innerHTML = "YOU ARE DEAD. Final Score: " + score;
+      if (topScore < score)
+        topScore = score;
+      var messagep = document.getElementById('topscore');
+      messagep.innerHTML = topScore;
+        
     }
     else
       messagep.innerHTML = score;

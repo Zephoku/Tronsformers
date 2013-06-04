@@ -280,7 +280,7 @@ cannonball = function () {
 
 function generateCannonball() {
 
-  if (cannonballCarrier.length > 50)
+  if (cannonballCarrier.length > 200)
     return;
 
   // maybe this goes here
@@ -295,8 +295,8 @@ function generateCannonball() {
   {
     var can = new cannonball();
 
-    can.x = Math.floor((Math.random()*100)+1) -50;
-    can.y = Math.floor((Math.random()*100)+1) -50;
+    can.x = Math.floor((Math.random()*120)+1) -50;
+    can.y = Math.floor((Math.random()*60)+1);
 
     can.o.geometry = ball;
     can.o.color = vec4.fromValues( 1.0, 1.0, 0.0, 1.0 );
@@ -330,7 +330,7 @@ function updateBalls() {
 }
 
 var score = 0;
-var ballRate = .25;
+var ballRate = 1.5;
 var isDead = false;
 
 var origMatrix = mat4.clone(o.matrixWorld);
@@ -352,20 +352,23 @@ function update() {
 
   for(var i = 0; i < cannonballCarrier.length; i++)
   {
+    if ((Math.abs(cannonballCarrier[i].x - (cameraX)/2 ) <= 2.5) &&
+        (Math.abs(cannonballCarrier[i].y - (cameraY)/2 ) <= 2.5) &&
+        (Math.abs(cameraZ + 100 - cannonballCarrier[i].z) <= 3.0) )
+    {
+      isDead = true;
+    }
+
+    cannonballCarrier[i].z += ballRate;
+
     if (cannonballCarrier[i].z > 130)
     {
       cannonballCarrier.shift();
       if(!isDead)
         score += 1;
       scene.removeObject(cannonballCarrier[i].o);
+      i--;
     }
-    if ((Math.abs(cannonballCarrier[i].x - cameraX ) <= 2) &&
-        (Math.abs(cannonballCarrier[i].y - cameraY ) <= 2) &&
-        (Math.abs(cannonballCarrier[i].z - cameraZ ) <= 2) )
-    {
-      isDead = true;
-    }
-    cannonballCarrier[i].z += ballRate;
 
   }
 
@@ -382,6 +385,11 @@ function update() {
 }
 
 update();
+
+function replay() {
+  score = 0;
+  isDead = false;
+}
 
 
 
