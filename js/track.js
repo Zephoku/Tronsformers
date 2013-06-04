@@ -7,10 +7,10 @@ var overlayContext = canvasOverlay.getContext('2d');
 
 // Control Variables
 var cameraX = 0;
-var cameraY = 0;
-var cameraZ = 30.0;
+var cameraY = 10;
+var cameraZ = 20.0;
 
-var userPosX = 12;
+var userPosX = 0;
 var userPosY = 12;
 var userPosZ = 3;
 
@@ -68,7 +68,7 @@ function drawFaceRectangle(event) {
 // Update Debug Messages on Screen
 function updateFaceDebugMessages(event) {
   var messagep = document.getElementById('headtrackerX');
-  messagep.innerHTML = event.x;
+  messagep.innerHTML = cameraX;
   var messagep = document.getElementById('headtrackerY');
   messagep.innerHTML = cameraY;
   var messagep = document.getElementById('headtrackerZ');

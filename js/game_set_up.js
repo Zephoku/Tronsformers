@@ -125,7 +125,6 @@ envir.geometry = cube;
 envir.color = vec4.fromValues( 0.53, .85, 1.0, 1.0 );
 scene.addObject( envir );
 
-
 o.geometry = g;
 o.color = vec4.fromValues( 1.0, 0.0, 0.0, 1.0 );
 scene.addObject( o );
@@ -140,15 +139,15 @@ function update() {
   camera.position[1] = cameraY;
   camera.position[2] = cameraZ;
 
-  var transMatrix = vec3.create;
-  transMatrix[0] = userPosX;
-  transMatrix[1] = 0;
-  transMatrix[2] = 0;
+  var transVec = vec3.create();
+  transVec[0] = userPosX;
+  transVec[1] = userPosY;
+  transVec[2] = userPosZ;
 
-  o.matrixWorld = mat4.translate( o.matrixWorld, o.matrixWorld, transMatrix  )
+  //vec3.add(camera.lookAt, camera.lookAt, transVec);
+  mat4.translate(o.matrixWorld, o.matrixWorld, transVec);
 
   camera.update();
-  camera.updateFromLookAt();
   renderer.render( scene, camera ); 
 }
 
