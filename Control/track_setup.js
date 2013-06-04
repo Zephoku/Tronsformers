@@ -5,6 +5,11 @@ var canvasOverlay = document.getElementById('overlay')
 var debugOverlay = document.getElementById('debug');
 var overlayContext = canvasOverlay.getContext('2d');
 
+// Control Variables
+var cameraX = 0;
+var cameraY = 0;
+var cameraZ = 30.0;
+
 // Custom Messages
 statusMessages = {
   "getUserMedia" : "getUserMedia seems to be supported",
@@ -39,7 +44,8 @@ var htracker = new headtrackr.Tracker({
   ui: true, 
     calcAngles: true, 
     headPosition: true, 
-    debug :debugOverlay
+    debug :debugOverlay,
+    fadeVideo: true
 });
 
 htracker.init(videoInput, canvasInput);

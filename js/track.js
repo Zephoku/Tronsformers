@@ -65,21 +65,6 @@ function drawFaceRectangle(event) {
   overlayContext.translate(-event.x, -event.y);
 }
 
-// // Turning Angle
-// // Derived from the angle of head
-// function turningAngle(event) {
-//   return (-1 * (event.angle * 180/Math.PI - 90));
-// }
-
-// // Speed
-// // Derived from the size of your head (proximity from the webcam)
-// // 100 is the base speed
-// // 140 is the base height
-// function speed(event) {
-//   var speed = 100 + 2*(event.height - 140);
-//   return speed;
-// }
-
 // Update Debug Messages on Screen
 function updateFaceDebugMessages(event) {
   var messagep = document.getElementById('headtrackerX');
@@ -97,7 +82,6 @@ function updateFaceDebugMessages(event) {
   // var messagep = document.getElementById('turningAngle');
   // messagep.innerHTML = turningAngle(event);
   // var messagep = document.getElementById('speed');
-  // messagep.innerHTML = user_control(event);
   // messagep.innerHTML = speed(event);
 
 }
