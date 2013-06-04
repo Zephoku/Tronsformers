@@ -131,14 +131,6 @@ document.onkeydown = handleKeyDown;
 document.onkeyup = handleKeyUp;
 
 
-
-
-
-
-
-
-
-
 // Cannonball geometry
 var index3 = 0;
 // ball_size is the size of the canonball (size of each side -- it's a square)
@@ -230,18 +222,15 @@ cannonballCarrier = [];
 cannonball = function () {
   this.x = 0;
   this.y = 0;
-  this.z = 100;
+  this.z = 0;
   this.o = new ENGINE.Object3D();
   this.origMat = mat4.create();
 }
-
-var randomnumber = Math.floor(Math.random()*100);
 
 function generateCannonball() {
 
   if (cannonballCarrier.length > 50)
     return;
-
 
   // maybe this goes here
   // var my_ball = new ENGINE.Object3D();
@@ -255,9 +244,8 @@ function generateCannonball() {
   {
     var can = new cannonball();
 
-
-    can.x = Math.floor((Math.random()*100)+1);
-    can.y = Math.floor((Math.random()*100)+1);
+    can.x = Math.floor((Math.random()*100)+1) -50;
+    can.y = Math.floor((Math.random()*100)+1) -50;
 
     can.o.geometry = ball;
     can.o.color = vec4.fromValues( 1.0, 1.0, 0.0, 1.0 );
@@ -269,7 +257,7 @@ function generateCannonball() {
     mat4.translate(can.o.matrixWorld, can.o.matrixWorld, transVec);
     can.origMat = mat4.clone(can.o.matrixWorld);
 
-    //cannonball.x = Math.floor(Math.random()*100);
+    // cannonball.x = Math.floor(Math.random()*100);
     // cannonball.y = Math.floor(Math.random()*100);
 
     cannonballCarrier.push(can);
@@ -291,7 +279,7 @@ function updateBalls() {
 }
 
 var score = 0;
-var ballRate = .50;
+var ballRate = .25;
 var isDead = false;
 
 var origMatrix = mat4.clone(o.matrixWorld);
@@ -313,7 +301,7 @@ function update() {
 
   for(var i = 0; i < cannonballCarrier.length; i++)
   {
-    if (cannonballCarrier[i].z < 5)
+    if (cannonballCarrier[i].z > 130)
     {
       cannonballCarrier.shift();
       score += 1;
@@ -325,7 +313,7 @@ function update() {
     {
       isDead = true;
     }
-    cannonballCarrier[i].z -= ballRate;
+    cannonballCarrier[i].z += ballRate;
 
   }
 
