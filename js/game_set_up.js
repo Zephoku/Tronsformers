@@ -259,7 +259,7 @@ function generateCannonball() {
     can.x = Math.floor((Math.random()*100)+1);
     can.y = Math.floor((Math.random()*100)+1);
 
-    can.o.geometry = g;
+    can.o.geometry = ball;
     can.o.color = vec4.fromValues( 1.0, 1.0, 0.0, 1.0 );
 
     var transVec = vec3.create();
@@ -269,7 +269,7 @@ function generateCannonball() {
     mat4.translate(can.o.matrixWorld, can.o.matrixWorld, transVec);
     can.origMat = mat4.clone(can.o.matrixWorld);
 
-    cannonball.x = Math.floor(Math.random()*100);
+    //cannonball.x = Math.floor(Math.random()*100);
     // cannonball.y = Math.floor(Math.random()*100);
 
     cannonballCarrier.push(can);
