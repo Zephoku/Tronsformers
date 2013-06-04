@@ -151,18 +151,6 @@ function generateCannonball() {
     can.x = Math.floor((Math.random()*100)+1);
     can.y = Math.floor((Math.random()*100)+1);
 
-    can.o.geometry = g;
-    can.o.color = vec4.fromValues( 1.0, 1.0, 0.0, 1.0 );
-
-    var transVec = vec3.create();
-    transVec[0] = can.x;
-    transVec[1] = can.y;
-    transVec[2] = can.z;
-    mat4.translate(can.o.matrixWorld, can.o.matrixWorld, transVec);
-    can.origMat = mat4.clone(can.o.matrixWorld);
-
-    cannonballCarrier.push(can);
-    scene.addObject( can.o );
   }
   else 
     return;
@@ -202,7 +190,7 @@ function update() {
 
   for(var i = 0; i < cannonballCarrier.length; i++)
   {
-    if (cannonballCarrier[i].z < 1)
+    if (cannonballCarrier[i].z < 5)
     {
       cannonballCarrier.shift();
       score += 1;
@@ -215,7 +203,6 @@ function update() {
       isDead = true;
     }
     cannonballCarrier[i].z -= ballRate;
-
   }
 
   updateBalls();
