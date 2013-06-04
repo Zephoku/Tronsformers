@@ -42,7 +42,7 @@ ENGINE.Shaders = {
         "vec4 normal = vec4(vNormal, 0.0 );",
 
 
-        "if ( drawShadows == 1 ) {",
+        "if ( drawShadows == 1 && (position * matrixModel).y >= 0.0 ) {",
           "mat4 sMatrix = mat4 ( lightPosition[0].y,  0.0,  0.0,  0.0,",
 					"	   -lightPosition[0].x,  0.0, -lightPosition[0].z, -1.0,",
 					"		0.0,  0.0,  lightPosition[0].y,  0.0,",

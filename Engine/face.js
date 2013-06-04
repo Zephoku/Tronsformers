@@ -12,4 +12,13 @@ ENGINE.Face = function ( a, b, c ) {
 
 }
 
-ENGINE.Face.prototype = {};
+ENGINE.Face.prototype.clone = function () {
+  var nf = new ENGINE.Face();
+  nf.a = this.a;
+  nf.b = this.b;
+  nf.c = this.c;
+  
+  nf.color = vec4.clone( this.color );
+
+  return nf;
+}

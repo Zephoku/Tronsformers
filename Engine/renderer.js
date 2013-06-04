@@ -123,6 +123,8 @@ ENGINE.Renderer = function ( args ) {
     var geometry = object.geometry
 
     if ( !geometry.__webglVertices ) {
+      console.log( object );
+      console.log( object.geometry );
       geometry.__webglVertices = [];
       for ( var a = 0; a < geometry.vertices.length; a++ ) {
         geometry.__webglVertices.push( geometry.vertices[a][0] );
