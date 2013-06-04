@@ -313,7 +313,7 @@ function update() {
 
   for(var i = 0; i < cannonballCarrier.length; i++)
   {
-    if (cannonballCarrier[i].z < 1)
+    if (cannonballCarrier[i].z < 5)
     {
       cannonballCarrier.shift();
       score += 1;
@@ -327,8 +327,7 @@ function update() {
     }
     cannonballCarrier[i].z -= ballRate;
 
-
-  // }
+  }
 
   updateBalls();
 
