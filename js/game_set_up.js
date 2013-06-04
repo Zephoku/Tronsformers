@@ -143,9 +143,10 @@ function update() {
   transVec[0] = userPosX;
   transVec[1] = userPosY;
   transVec[2] = userPosZ;
+  mat4.translate(o.matrixWorld, o.matrixWorld, transVec);
+
 
   //vec3.add(camera.lookAt, camera.lookAt, transVec);
-  mat4.translate(o.matrixWorld, o.matrixWorld, transVec);
 
   camera.update();
   renderer.render( scene, camera ); 

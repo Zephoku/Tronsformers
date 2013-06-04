@@ -426,7 +426,7 @@ body {
 #glContainer{
 }
 #glCanvas{
-    margin: 10px 30px 10px 350px;
+  margin: 10px 30px 10px 350px;
 
 }
 
@@ -458,4 +458,11 @@ h4,
 }
 .title p {
   padding: 10px;
+}
+
+#score-container {
+  position: absolute;
+  top: 10px;
+  left: 500px;
+  z-index: 10000;
 }

@@ -10,7 +10,7 @@ var cameraX = 0;
 var cameraY = 10;
 var cameraZ = 20.0;
 
-var userPosX = 0;
+var userPosX = 3;
 var userPosY = 12;
 var userPosZ = 3;
 
@@ -114,6 +114,7 @@ function handleKeys() {
   if (currentlyPressedKeys[65]) {
     // Left cursor key
     userPosX -= 1;
+  mat4.translate(o.matrixWorld, o.matrixWorld, transVec);
   }
   if (currentlyPressedKeys[68]) {
     // Right cursor key
