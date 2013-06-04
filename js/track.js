@@ -89,6 +89,8 @@ function updateFaceDebugMessages(event) {
 function updateCameraMovement(event){
   cameraX = Math.floor((160 - event.x) );
   cameraY = Math.floor((170 - event.y) );
+  if( cameraY < 0 )
+    cameraY = 0;
   cameraZ = Math.floor(250/event.width *10);
 }
 
