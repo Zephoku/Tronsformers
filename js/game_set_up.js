@@ -304,7 +304,8 @@ function update() {
     if (cannonballCarrier[i].z > 130)
     {
       cannonballCarrier.shift();
-      score += 1;
+      if(!isDead)
+        score += 1;
       scene.removeObject(cannonballCarrier[i].o);
     }
     if (cannonballCarrier[i].x == cameraX &&
