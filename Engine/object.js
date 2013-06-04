@@ -14,4 +14,5 @@ ENGINE.Object3D = function( geometry, material ) {
   this.matrixWorld = mat4.create(); //matrix to world space
 }
 
-ENGINE.Object3D.prototype = {};
+ENGINE.Object3D.prototype = {
+};

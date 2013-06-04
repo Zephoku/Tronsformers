@@ -10,6 +10,10 @@ var cameraX = 0;
 var cameraY = 0;
 var cameraZ = 30.0;
 
+var userPosX = 12;
+var userPosY = 12;
+var userPosZ = 3;
+
 // Custom Messages
 statusMessages = {
   "getUserMedia" : "getUserMedia seems to be supported",
@@ -99,11 +103,47 @@ function updateFaceDebugMessages(event) {
 }
 
 function updateCameraMovement(event){
-  cameraX = Math.floor((170 - event.x) );
-  cameraY = Math.floor((180 - event.y) );
+  cameraX = Math.floor((160 - event.x) );
+  cameraY = Math.floor((170 - event.y) );
   cameraZ = Math.floor(250/event.width *10);
 }
 
+
+var currentlyPressedKeys = {};
+
+function handleKeyDown(event) {
+  currentlyPressedKeys[event.keyCode] = true;
+
+  if (String.fromCharCode(event.keyCode) == "F") {
+
+  }
+}
+
+
+function handleKeyUp(event) {
+
+  currentlyPressedKeys[event.keyCode] = false;
+}
+
+
+function handleKeys() {
+  if (currentlyPressedKeys[65]) {
+    // Left cursor key
+    userPosX -= 1;
+  }
+  if (currentlyPressedKeys[68]) {
+    // Right cursor key
+    userPosX += 1;
+  }
+  if (currentlyPressedKeys[87]) {
+    // Up cursor key
+    userPosZ += 1;
+  }
+  if (currentlyPressedKeys[83]) {
+    // Down cursor key
+    userPosZ -= 1;
+  }
+}
 // Face Detection
 document.addEventListener("facetrackingEvent", function( event ) {
   // Clear Canvas

@@ -42,15 +42,24 @@ g.computeVertexNormals();
 o.geometry = g;
 o.color = vec4.fromValues( 1.0, 0.0, 0.0, 1.0 );
 scene.addObject( o );
+document.onkeydown = handleKeyDown;
+document.onkeyup = handleKeyUp;
 
 function update() {
   requestAnimFrame(update);
+  handleKeys();
 
   camera.position[0] = cameraX;
   camera.position[1] = cameraY;
   camera.position[2] = cameraZ;
 
-  camera.lookat = o.position;
+  var transMatrix = vec3.create;
+  transMatrix[0] = userPosX;
+  transMatrix[1] = 0;
+  transMatrix[2] = 0;
+
+  o.matrixWorld = mat4.translate( o.matrixWorld, o.matrixWorld, transMatrix  )
+
   camera.update();
   camera.updateFromLookAt();
   renderer.render( scene, camera ); 
