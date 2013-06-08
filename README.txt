@@ -20,6 +20,8 @@ Custom, self-built game engine
 Facial detection and tracking using headtrackr.js
 Shadows
 Collision Detection
+Bullets are randomly generated
+3D camera movement, controlled by headtracking
 Top score tracker
 Levels of difficulty
 Includes debugger information about webcam status
