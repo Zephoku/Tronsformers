@@ -25,3 +25,9 @@ Bullets are randomly generated
 Top score tracker
 Levels of difficulty
 Includes debugger information about webcam status
+
+Code
+~~~~
+Website is in index.html
+Engine files are in Engine directory
+Game setup is in js directory
